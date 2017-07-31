@@ -63,9 +63,9 @@ describe('VueDraggableResizable.vue', function () {
     it('should not exceed the size of parent element if constrained', function (done) {
       const ParentComponent = {
         template: `<div class="parent" style="width: 500px; height: 500px;">
-          <deformation :w="600" :h="600" :parent="true">
+          <vue-draggable-resizable :w="600" :h="600" :parent="true">
             <p>Resize Me</p>
-          </deformation>
+          </vue-draggable-resizable>
         </div>`,
         components: {
           VueDraggableResizable
@@ -94,9 +94,9 @@ describe('VueDraggableResizable.vue', function () {
     it('should not exceed the position of parent element if constrained', function (done) {
       const ParentComponent = {
         template: `<div class="parent" style="width: 500px; height: 500px;">
-          <deformation :x="400" :y="400" :w="200" :h="200" :parent="true">
+          <vue-draggable-resizable :x="400" :y="400" :w="200" :h="200" :parent="true">
             <p>Resize Me</p>
-          </deformation>
+          </vue-draggable-resizable>
         </div>`,
         components: {
           VueDraggableResizable

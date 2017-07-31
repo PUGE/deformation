@@ -186,7 +186,6 @@ export default {
       if (target !== this.$el && !regex.test(target.className)) {
         if (this.active) {
           this.active = false
-
           this.$emit('deactivated')
         }
       }
