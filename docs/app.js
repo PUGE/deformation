@@ -1,6 +1,6 @@
-import VueDraggableResizable from '../src'
+import Deformation from '../src'
 
-Vue.component('deformation', VueDraggableResizable);
+Vue.component('deformation', Deformation);
 
 new Vue({
   el: '#app1'

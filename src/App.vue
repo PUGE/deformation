@@ -9,12 +9,12 @@
 </template>
 
 <script>
-import VueDraggableResizable from './components/vue-draggable-resizable'
+import Deformation from './components/vue-draggable-resizable'
 
 export default {
   name: 'app',
   components: {
-    'deformation': VueDraggableResizable
+    'deformation': Deformation
   }
 }
 </script>

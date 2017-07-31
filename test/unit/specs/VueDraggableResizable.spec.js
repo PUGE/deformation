@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import VueDraggableResizable from '@/components/vue-draggable-resizable'
+import Deformation from '@/components/vue-draggable-resizable'
 import { beforeEachHooks, afterEachHooks, mount, simulate } from 'vue-unit'
 import Syn from 'syn'
 import sinon from 'sinon'
@@ -8,7 +8,7 @@ function nextTick () {
   return new Promise((resolve, reject) => Vue.nextTick(resolve))
 }
 
-describe('VueDraggableResizable.vue', function () {
+describe('Deformation.vue', function () {
   beforeEach(beforeEachHooks)
 
   /***********
@@ -16,14 +16,14 @@ describe('VueDraggableResizable.vue', function () {
    ***********/
 
   it('should render correctly', function () {
-    const vm = mount(VueDraggableResizable)
+    const vm = mount(Deformation)
 
     expect(vm.$el).to.be.ok
     expect(vm.$el.className).to.contain('vdr')
   })
 
   it('should render the elements in slot', function () {
-    mount(VueDraggableResizable, {}, {}, '<p>Resize Me</p>')
+    mount(Deformation, {}, {}, '<p>Resize Me</p>')
 
     expect(document.querySelector('.vdr')).to.have.class('vdr')
     // cannot fully match the child element because vue injects a data-v-* random attribute
@@ -36,7 +36,7 @@ describe('VueDraggableResizable.vue', function () {
 
   describe('Size and position props', function () {
     it('should set the size of the element through props', function () {
-      const vm = mount(VueDraggableResizable, {
+      const vm = mount(Deformation, {
         w: 600,
         h: 500
       })
@@ -46,7 +46,7 @@ describe('VueDraggableResizable.vue', function () {
     })
 
     it('should costrain minimum width and height', function (done) {
-      const vm = mount(VueDraggableResizable, {
+      const vm = mount(Deformation, {
         w: 100,
         h: 100,
         minw: 200,
@@ -68,7 +68,7 @@ describe('VueDraggableResizable.vue', function () {
           </deformation>
         </div>`,
         components: {
-          VueDraggableResizable
+          Deformation
         }
       }
 
@@ -82,7 +82,7 @@ describe('VueDraggableResizable.vue', function () {
     })
 
     it('should set the position of the element through props', function () {
-      const vm = mount(VueDraggableResizable, {
+      const vm = mount(Deformation, {
         x: 200,
         y: 150
       })
@@ -99,7 +99,7 @@ describe('VueDraggableResizable.vue', function () {
           </deformation>
         </div>`,
         components: {
-          VueDraggableResizable
+          Deformation
         }
       }
 
@@ -115,7 +115,7 @@ describe('VueDraggableResizable.vue', function () {
     it('should emit resizing event when the component is mounted', function () {
       const resizing = sinon.spy()
 
-      const vm = mount(VueDraggableResizable, {
+      const vm = mount(Deformation, {
         x: 50,
         y: 50,
         w: 200,
@@ -136,7 +136,7 @@ describe('VueDraggableResizable.vue', function () {
     it('should activate the element by clicking on it', function () {
       const activated = sinon.spy()
 
-      const vm = mount(VueDraggableResizable, {}, { activated })
+      const vm = mount(Deformation, {}, { activated })
 
       simulate(vm.$el, 'mousedown')
 
@@ -146,7 +146,7 @@ describe('VueDraggableResizable.vue', function () {
     })
 
     it('should show the handles if the element is active', function (done) {
-      const vm = mount(VueDraggableResizable)
+      const vm = mount(Deformation)
 
       simulate(vm.$el, 'mousedown')
 
@@ -159,7 +159,7 @@ describe('VueDraggableResizable.vue', function () {
     it('should deactivate the element by clicking outside it', function () {
       const deactivated = sinon.spy()
 
-      const vm = mount(VueDraggableResizable, {}, { deactivated })
+      const vm = mount(Deformation, {}, { deactivated })
 
       simulate(vm.$el, 'mousedown')
       expect(vm.$data.active).to.equal(true)
@@ -173,7 +173,7 @@ describe('VueDraggableResizable.vue', function () {
     it('should emit "deactivated" event only once', function () {
       const deactivated = sinon.spy()
 
-      const vm = mount(VueDraggableResizable, {}, { deactivated })
+      const vm = mount(Deformation, {}, { deactivated })
 
       simulate(vm.$el, 'mousedown')
 
@@ -190,39 +190,39 @@ describe('VueDraggableResizable.vue', function () {
 
   describe('Resizable props', function () {
     it('should have "resizable" class by default', function () {
-      const vm = mount(VueDraggableResizable)
+      const vm = mount(Deformation)
       expect(vm.$el.className).to.contain('resizable')
     })
 
     it('should not have "resizable" class if resizable is disabled', function () {
-      const vm = mount(VueDraggableResizable, {
+      const vm = mount(Deformation, {
         resizable: false
       })
       expect(vm.$el.className).to.not.contain('resizable')
     })
 
     it('should render eight handles not visible by default', function () {
-      const vm = mount(VueDraggableResizable)
+      const vm = mount(Deformation)
       expect(vm.$el.querySelectorAll('div.handle')).to.have.length(8)
       expect(vm.$el.querySelectorAll('div[style*="display:block"]')).to.have.length(0)
     })
 
     it('should not render handles if resizable is disabled', function () {
-      const vm = mount(VueDraggableResizable, {
+      const vm = mount(Deformation, {
         resizable: false
       })
       expect(vm.$el.querySelectorAll('div.handle')).to.have.length(0)
     })
 
     it('should render only the handles passed with props', function () {
-      const vm = mount(VueDraggableResizable, {
+      const vm = mount(Deformation, {
         handles: ['tl', 'tm', 'tr', 'bl', 'bm', 'br']
       })
       expect(vm.$el.querySelectorAll('div.handle')).to.have.length(6)
     })
 
     it('should not render the handles if handles props is empty', function () {
-      const vm = mount(VueDraggableResizable, {
+      const vm = mount(Deformation, {
         handles: []
       })
       expect(vm.$el.querySelectorAll('div.handle')).to.have.length(0)
@@ -235,7 +235,7 @@ describe('VueDraggableResizable.vue', function () {
 
   describe('Resizable functions', function () {
     it('should resize the element from the bottom right handle', function (done) {
-      const vm = mount(VueDraggableResizable, {
+      const vm = mount(Deformation, {
         w: 100,
         h: 100
       })
@@ -265,7 +265,7 @@ describe('VueDraggableResizable.vue', function () {
     })
 
     it('should resize the element from the top left handle', function (done) {
-      const vm = mount(VueDraggableResizable, {
+      const vm = mount(Deformation, {
         x: 50,
         y: 50,
         w: 100,
@@ -301,7 +301,7 @@ describe('VueDraggableResizable.vue', function () {
     it('should emit "resizing" event while resizing the element', function (done) {
       const resizing = sinon.spy()
 
-      const vm = mount(VueDraggableResizable, {
+      const vm = mount(Deformation, {
         w: 100,
         h: 100
       }, {
@@ -333,7 +333,7 @@ describe('VueDraggableResizable.vue', function () {
     it('should emit "resizestop" event while stopping resizing the element', function (done) {
       const resizestop = sinon.spy()
 
-      const vm = mount(VueDraggableResizable, {
+      const vm = mount(Deformation, {
         w: 100,
         h: 100
       }, {
@@ -372,12 +372,12 @@ describe('VueDraggableResizable.vue', function () {
 
   describe('Draggable props', function () {
     it('should have "draggable" class by default', function () {
-      const vm = mount(VueDraggableResizable)
+      const vm = mount(Deformation)
       expect(vm.$el.className).to.contain('draggable')
     })
 
     it('should not have "draggable" class if draggable is disabled', function () {
-      const vm = mount(VueDraggableResizable, {
+      const vm = mount(Deformation, {
         draggable: false
       })
       expect(vm.$el.className).to.not.contain('draggable')
@@ -390,7 +390,7 @@ describe('VueDraggableResizable.vue', function () {
 
   describe('Draggable events', function () {
     it('should activate dragging on an element by clicking it', function () {
-      const vm = mount(VueDraggableResizable)
+      const vm = mount(Deformation)
 
       simulate(vm.$el, 'mousedown')
 
@@ -404,7 +404,7 @@ describe('VueDraggableResizable.vue', function () {
 
   describe('Draggable functions', function () {
     it('should drag the element', function (done) {
-      const vm = mount(VueDraggableResizable, {
+      const vm = mount(Deformation, {
         w: 100,
         h: 100
       })
@@ -432,7 +432,7 @@ describe('VueDraggableResizable.vue', function () {
     it('should emit "dragging" event while dragging the element', function (done) {
       const dragging = sinon.spy()
 
-      const vm = mount(VueDraggableResizable, {
+      const vm = mount(Deformation, {
         w: 100,
         h: 100
       }, {
@@ -460,7 +460,7 @@ describe('VueDraggableResizable.vue', function () {
     it('should emit "dragstop" event while stopping dragging the element', function (done) {
       const dragstop = sinon.spy()
 
-      const vm = mount(VueDraggableResizable, {
+      const vm = mount(Deformation, {
         w: 100,
         h: 100
       }, {
@@ -497,7 +497,7 @@ describe('VueDraggableResizable.vue', function () {
     it('should should not maximize the element if parent prop is false', function (done) {
       const resizing = sinon.spy()
 
-      const vm = mount(VueDraggableResizable, {
+      const vm = mount(Deformation, {
         x: 10,
         y: 10,
         w: 100,
@@ -522,7 +522,7 @@ describe('VueDraggableResizable.vue', function () {
     it('should should not maximize the element if maximize prop is false', function (done) {
       const resizing = sinon.spy()
 
-      const vm = mount(VueDraggableResizable, {
+      const vm = mount(Deformation, {
         x: 10,
         y: 10,
         w: 100,
