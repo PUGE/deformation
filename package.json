@@ -1,28 +1,28 @@
 {
   "name": "deformation",
-  "version": "0.0.2",
-  "description": "创造一片可以 拖动 并且 可以随意改变大小 的区域",
+  "version": "0.0.4",
+  "description": "可自由拖拽控件",
   "author": "PUGE <my@owo.help>",
   "main": "dist/index.js",
   "jsnext:main": "src/index.js",
   "scripts": {
     "dev": "node build/dev-server.js",
     "docs": "webpack --config build/webpack.docs.js",
-    "build": "rm -rf dist && webpack --config build/webpack.dist.js",
+    "build": "webpack --config build/webpack.dist.js",
     "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
     "test": "npm run unit",
-    "prepublish": "npm run test; npm run build",
+    "prepublish": "npm run build",
     "lint": "eslint --ext .js,.vue src test/unit/specs"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/mauricius/vue-draggable-resizable.git"
+    "url": "https://github.com/PUGE/deformation.git"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/mauricius/vue-draggable-resizable/issues"
+    "url": "https://github.com/PUGE/deformation/issues"
   },
-  "homepage": "https://github.com/mauricius/vue-draggable-resizable",
+  "homepage": "https://github.com/PUGE/deformation",
   "keywords": [
     "vue",
     "component",
