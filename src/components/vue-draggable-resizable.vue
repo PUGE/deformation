@@ -163,20 +163,16 @@ export default {
   methods: {
     elmDown: function (e) {
       const tag = e.target.tagName.toLowerCase()
-
       if (tag !== 'textarea' && tag !== 'input') {
         if (!this.active) {
           this.zIndex += 1
           this.active = true
-
           this.$emit('activated')
         }
-
         this.elmX = parseInt(this.$el.style.left)
         this.elmY = parseInt(this.$el.style.top)
         this.elmW = this.$el.offsetWidth || this.$el.clientWidth
         this.elmH = this.$el.offsetHeight || this.$el.clientHeight
-
         if (this.draggable) {
           this.opacity = 0.6
           this.dragging = true
@@ -342,6 +338,16 @@ export default {
 
       this.elmX = this.left
       this.elmY = this.top
+    }
+  },
+  watch: {
+    x: function (newVal) {
+      console.log(newVal)
+      this.left = newVal
+    },
+    y: function (newVal) {
+      console.log(newVal)
+      this.top = newVal
     }
   },
   computed: {

@@ -1,21 +1,18 @@
 <template>
-  <div id="app">
-    <div style="height: 500px; width: 500px; margin: 20px; border: 1px solid red; position: relative;">
-      <vue-draggable-resizable :resizable="true" :x="0" :y="0" style="border: 1px solid">
-        <input type="text">
-        <textarea name="text" cols="30" rows="10"></textarea>
-        <input type="radio" name="radio" value="1"> 1
-        <input type="radio" name="radio" value="2"> 2
-        <input type="radio" name="radio" value="3"> 3
-        <input type="checkbox" value="on">
-      </vue-draggable-resizable>
+  <div id="app" style="height: 100%; width: 100%; position: relative; margin: 10px;">
+    <div style="height: 500px; width: 500px; margin: 20px; border: 1px solid red;">
+      <template v-for="element in elements">
+        <vue-draggable-resizable :resizable="true" :x="element.x" :y="element.y">
+          <p><b>{{ element.id }}</b> - {{ element.text }}</p>
+        </vue-draggable-resizable>
+      </template>
     </div>
     <button @click="change">Cambia posizione</button>
   </div>
 </template>
 
 <script>
-import Deformation from './components/vue-draggable-resizable'
+import VueDraggableResizable from './components/vue-draggable-resizable'
 
 export default {
   name: 'app',
@@ -24,7 +21,26 @@ export default {
   },
   data () {
     return {
-
+      elements: [
+        {
+          id: 'uno',
+          text: 'I can be moved around freely within the parent',
+          x: 0,
+          y: 0
+        },
+        {
+          id: 'due',
+          text: 'My initial position is set to 0,0 but I appear below the previous element at 0, 200 and can be moved further down than the border of my parent',
+          x: 100,
+          y: 0
+        },
+        {
+          id: 'tre',
+          text: 'I appear below the lower end of my predecessor. If the size of one of them is changed, I move accordingly without changing my coordinates',
+          x: 0,
+          y: 100
+        }
+      ]
     }
   },
   methods: {
@@ -37,8 +53,15 @@ export default {
 </script>
 
 <style>
-  .active {
-    background-color: #ccc;
-    opacity: 0.7;
+  .active:after {
+    content:"";
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    box-sizing: border-box;
+    border: 1px dashed;
   }
 </style>
