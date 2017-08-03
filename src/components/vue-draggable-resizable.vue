@@ -1,5 +1,5 @@
 <template>
-  <div class="vdr" :class="{ draggable: draggable, resizable: resizable, active: active }" @mousedown="elmDown" @dblclick="fillParent" :style="style">
+  <div class="vdr" :class="{ draggable: draggable, resizable: resizable, active: active }" @mousedown.stop="elmDown" @dblclick.stop="fillParent" :style="style">
     <div
       class="handle"
       v-if="resizable"

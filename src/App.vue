@@ -7,7 +7,7 @@
         </vue-draggable-resizable>
       </template>
     </div>
-    <button @click="change">Cambia posizione</button>
+    <button @click.stop="change">Cambia posizione</button>
   </div>
 </template>
 
