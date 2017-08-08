@@ -167,7 +167,7 @@ export default {
     }
   },
   methods: {
-    elmDown: function (e) {
+    elmDown: function (e) { // 组件被按下事件
       const tag = e.target.tagName.toLowerCase()
       if (tag !== 'textarea' && tag !== 'input') {
         if (!this.active) {
