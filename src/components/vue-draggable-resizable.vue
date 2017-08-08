@@ -51,6 +51,13 @@ export default {
         return val > 0
       }
     },
+    zIndex: {
+      type: Number,
+      default: 1,
+      validator: function (val) {
+        return val >= 0
+      }
+    },
     x: {
       type: Number,
       default: 0,
@@ -156,8 +163,7 @@ export default {
       dragging: false,
       active: false,
       opacity: 1,
-      handle: null,
-      zIndex: 1
+      handle: null
     }
   },
   methods: {
@@ -165,7 +171,6 @@ export default {
       const tag = e.target.tagName.toLowerCase()
       if (tag !== 'textarea' && tag !== 'input') {
         if (!this.active) {
-          this.zIndex += 1
           this.active = true
           this.$emit('activated')
         }
