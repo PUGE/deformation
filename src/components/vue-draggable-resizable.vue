@@ -95,7 +95,7 @@ export default {
       type: Boolean, default: false
     },
     maximize: {
-      type: Boolean, default: true
+      type: Boolean, default: false
     }
   },
   created: function () {

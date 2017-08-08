@@ -231,12 +231,12 @@ Define the array of handles to restrict the element resizing:
 #### maximize
 类型: `Boolean`<br>
 必要性: `false`<br>
-默认值: `true`
+默认值: `false`
 
-If set to `false` prevents the component to fill its parent when double-clicked.
+If set to `true` allows the component to fill its parent when double-clicked.
 
 ```html
-<Deformation :maximize="false">
+<Deformation :maximize="true">
 ```
 
 ---
