@@ -166,8 +166,8 @@ export default {
   },
   methods: {
     elmDown: function (e) { // 组件被按下事件
-      const tag = e.target.tagName.toLowerCase()
-      if (tag !== 'textarea' && tag !== 'input') {
+      const target = e.target || e.srcElement
+      if (this.$el.contains(target)) {
         if (!this.active) {
           this.active = true
           this.$emit('activated')
@@ -183,10 +183,10 @@ export default {
       }
     },
     deselect: function (e) {
-      let target = e.target || e.srcElement
-      let regex = new RegExp('handle-([trmbl]{2})', '')
+      const target = e.target || e.srcElement
+      const regex = new RegExp('handle-([trmbl]{2})', '')
 
-      if (target !== this.$el && !regex.test(target.className)) {
+      if (!this.$el.contains(target) && !regex.test(target.className)) {
         if (this.active) {
           this.active = false
 
