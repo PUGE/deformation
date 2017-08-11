@@ -1,14 +1,15 @@
 <template>
   <div class="vdr" :class="{ draggable: draggable, resizable: resizable, active: active }" @mousedown.stop="elmDown" @dblclick.stop="fillParent" :style="style">
-    <div
-      class="handle"
-      v-if="resizable"
-      v-for="handle in handles"
-      :class="'handle-' + handle"
-      :style="{ display: active ? 'block' : 'none'}"
-      @mousedown.stop.prevent="handleDown(handle, $event)"
-    ></div>
-    <slot></slot>
+    <template v-if="resizable">
+      <div
+        class="handle"
+        v-for="handle in handles"
+        :class="'handle-' + handle"
+        @mousedown.stop.prevent="handleDown(handle, $event)"
+        :key="handle"
+      ></div>
+      <slot></slot>
+    </template>
   </div>
 </template>
 
@@ -429,5 +430,8 @@ export default {
     bottom: -10px;
     right: -10px;
     cursor: se-resize;
+  }
+  .active .handle {
+    display: block;
   }
 </style>

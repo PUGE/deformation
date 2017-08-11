@@ -1,6 +1,6 @@
 {
   "name": "deformation",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "自由拖动组件",
   "author": "Maurizio Bonani <maurizio.bonani@gmail.com>",
   "main": "dist/index.js",
