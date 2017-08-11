@@ -248,7 +248,7 @@ If set to `true` allows the component to fill its parent when double-clicked.
 必要性: `false`<br>
 Parameters: `-`
 
-Called whenever the component gets clicked, in order to show handles.
+组件被初始化事件.
 
 ```html
 <Deformation @activated="onActivated">
@@ -259,7 +259,7 @@ Called whenever the component gets clicked, in order to show handles.
 必要性: `false`<br>
 Parameters: `-`
 
-Called whenever the user clicks anywhere outside the component, in order to deactivate it.
+组件被销毁事件.
 
 ```html
 <Deformation @deactivated="onDeactivated">
@@ -269,12 +269,12 @@ Called whenever the user clicks anywhere outside the component, in order to deac
 
 必要性: `false`<br>
 Parameters:
-* `left` the X position of the element
-* `top` the Y position of the element
-* `width` the width of the element
-* `height` the height of the element
+* `left` 组件 X 轴坐标
+* `top` 组件 Y 轴坐标
+* `width` 组件宽度
+* `height` 组件高度
 
-Called whenever the component gets resized.
+组件大小改变事件.
 
 ```html
 <Deformation @resizing="onResizing">
@@ -284,12 +284,12 @@ Called whenever the component gets resized.
 
 必要性: `false`<br>
 Parameters:
-* `left` the X position of the element
-* `top` the Y position of the element
-* `width` the width of the element
-* `height` the height of the element
+* `left` 组件 X 轴坐标
+* `top` 组件 Y 轴坐标
+* `width` 组件宽度
+* `height` 组件高度
 
-Called whenever the component stops getting resized.
+组件大小改变结束事件.
 
 ```html
 <Deformation @resizestop="onResizstop">
@@ -299,10 +299,10 @@ Called whenever the component stops getting resized.
 
 必要性: `false`<br>
 Parameters:
-* `left` the X position of the element
-* `top` the Y position of the element
+* `left` 组件 X 轴坐标
+* `top` 组件 Y 轴坐标
 
-Called whenever the component gets dragged.
+组件拖动事件.
 
 ```html
 <Deformation @dragging="onDragging">
@@ -312,24 +312,24 @@ Called whenever the component gets dragged.
 
 必要性: `false`<br>
 Parameters:
-* `left` the X position of the element
-* `top` the Y position of the element
+* `left` 组件 X 轴坐标
+* `top` 组件 Y 轴坐标
 
-Called whenever the component stops getting dragged.
+组件拖动结束事件.
 
 ```html
 <Deformation @dragstop="onDragstop">
 ```
 
-### Gotchas
+### 陷阱
 
 Be careful to use appropriate values for `x`, `y`, `w`, `h`, `minh` and `minh` props when you want to restrict the component in its parent element.
 
-### Bonus
+### 特色
 
 If `resizing`, `parent` and `maximize` props are `true` you can double-click on the element to make it fill the parent.
 
-## Contributing
+## 贡献
 
 Any contribution to the code or any part of the documentation and any idea and/or suggestion are very welcome.
 
