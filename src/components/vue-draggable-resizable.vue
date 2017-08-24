@@ -1,5 +1,5 @@
 <template>
-  <div class="vdr" :class="{ draggable: draggable, resizable: resizable, active: active }" @mousedown.stop="elmDown" @dblclick.stop="fillParent" :style="style">
+  <div class="vdr" :class="{ draggable: draggable, resizable: resizable, active: active }" @mousedown.stop.self="elmDown" @dblclick.stop="fillParent" :style="style">
     <template v-if="resizable">
       <div
         class="handle"
@@ -346,11 +346,9 @@ export default {
   },
   watch: {
     x: function (newVal) {
-      console.log(newVal)
       this.left = newVal
     },
     y: function (newVal) {
-      console.log(newVal)
       this.top = newVal
     }
   },
