@@ -2,8 +2,7 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App'
-
-Vue.config.productionTip = false
+import deformation from './components/vue-draggable-resizable'
 
 /* eslint-disable no-new */
 new Vue({

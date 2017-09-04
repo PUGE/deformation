@@ -1,5 +1,5 @@
 <template>
-  <div class="vdr" :class="{ draggable: draggable, resizable: resizable, active: active }" @mousedown.stop.self="elmDown" @dblclick.stop="fillParent" :style="style">
+  <div class="vdr" :class="{ draggable: draggable, resizable: resizable, active: active }" @mousedown.stop="elmDown" @dblclick.stop="fillParent" :style="style">
     <template v-if="resizable">
       <div
         class="handle"
@@ -124,24 +124,16 @@ export default {
     document.documentElement.addEventListener('mousemove', this.handleMove, true)
     document.documentElement.addEventListener('mousedown', this.deselect, true)
     document.documentElement.addEventListener('mouseup', this.handleUp, true)
-
     if (this.minw > this.w) this.width = this.minw
-
     if (this.minh > this.h) this.height = this.minh
-
     if (this.parent) {
       const parentW = parseInt(this.$el.parentNode.clientWidth, 10)
       const parentH = parseInt(this.$el.parentNode.clientHeight, 10)
-      
       this.parentW = parentW
       this.parentH = parentH
-
       if (this.w > this.parentW) this.width = parentW
-
       if (this.h > this.parentH) this.height = parentH
-
       if ((this.x + this.w) > this.parentW) this.width = parentW - this.x
-
       if ((this.y + this.h) > this.parentH) this.height = parentH - this.y
     }
 
