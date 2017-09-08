@@ -18,55 +18,48 @@ export default {
   replace: true,
   name: 'vue-draggable-resizable',
   props: {
-    draggable: {
+    draggable: { // 是否可被拖动
       type: Boolean, default: true
     },
-    resizable: {
+    resizable: { // 是否可改变大小
       type: Boolean, default: true
     },
-    w: {
+    w: { // 宽度
       type: Number,
       default: 200,
       validator: function (val) {
         return val > 0
       }
     },
-    h: {
+    h: { // 高度
       type: Number,
       default: 200,
       validator: function (val) {
         return val > 0
       }
     },
-    minw: {
+    minw: { // 最小宽度
       type: Number,
       default: 50,
       validator: function (val) {
         return val > 0
       }
     },
-    minh: {
+    minh: { // 最小高度
       type: Number,
       default: 50,
       validator: function (val) {
         return val > 0
       }
     },
-    zIndex: {
-      type: Number,
-      default: 1,
-      validator: function (val) {
-        return val >= 0
-      }
-    },
-    x: {
+    x: { // 距父元素左上角X轴偏移量
       type: Number,
       default: 0,
       validator: function (val) {
         return val >= 0
       }
     },
-    y: {
+    y: { // 距父元素左上角Y轴偏移量
       type: Number,
       default: 0,
       validator: function (val) {
@@ -79,7 +72,7 @@ export default {
         return ['tl', 'tm', 'tr', 'mr', 'br', 'bm', 'bl', 'ml']
       }
     },
-    axis: {
+    axis: { // 定义组件可以拖动的轴线
       type: String,
       default: 'both',
       validator: function (val) {
@@ -124,16 +117,24 @@ export default {
     document.documentElement.addEventListener('mousemove', this.handleMove, true)
     document.documentElement.addEventListener('mousedown', this.deselect, true)
     document.documentElement.addEventListener('mouseup', this.handleUp, true)
+
     if (this.minw > this.w) this.width = this.minw
+
     if (this.minh > this.h) this.height = this.minh
+
     if (this.parent) {
       const parentW = parseInt(this.$el.parentNode.clientWidth, 10)
       const parentH = parseInt(this.$el.parentNode.clientHeight, 10)
+      
       this.parentW = parentW
       this.parentH = parentH
+
       if (this.w > this.parentW) this.width = parentW
+
       if (this.h > this.parentH) this.height = parentH
+
       if ((this.x + this.w) > this.parentW) this.width = parentW - this.x
+
       if ((this.y + this.h) > this.parentH) this.height = parentH - this.y
     }
 
@@ -158,7 +159,7 @@ export default {
     }
   },
   methods: {
-    elmDown: function (e) { // 组件被按下事件
+    elmDown (e) { // 组件被按下事件
       const target = e.target || e.srcElement
       if (this.$el.contains(target)) {
         if (!this.active) {
@@ -195,7 +196,7 @@ export default {
 
       this.resizing = true
     },
-    fillParent: function (e) {
+    fillParent (e) { // 双击自动扩大
       if (!this.parent || !this.resizable || !this.maximize) return
 
       let done = false
@@ -351,7 +352,6 @@ export default {
         left: this.left + 'px',
         width: this.width + 'px',
         height: this.height + 'px',
-        zIndex: this.zIndex,
         opacity: this.opacity
       }
     }
