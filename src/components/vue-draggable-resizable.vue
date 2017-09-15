@@ -1,5 +1,5 @@
 <template>
-  <div class="vdr" :class="{ draggable: draggable, resizable: resizable, active: active , dragging: dragging, resizing: resizing}" @mousedown.stop="elmDown" @dblclick.stop="fillParent" :style="style">
+  <div class="vdr" id="vdr" :class="{ draggable: draggable, resizable: resizable, active: active , dragging: dragging, resizing: resizing}" @mousedown.stop="elmDown" @dblclick.stop="fillParent" :style="style">
     <template v-if="resizable">
       <div
         class="handle"
@@ -66,6 +66,10 @@ export default {
         return val >= 0
       }
     },
+    zoom: {
+      type: Number,
+      default: 1
+    },
     handles: {
       type: Array,
       default: function () {
@@ -113,7 +117,7 @@ export default {
     this.elmW = 0
     this.elmH = 0
   },
-  mounted: function () {
+  mounted () {
     document.documentElement.addEventListener('mousemove', this.handleMove, true)
     document.documentElement.addEventListener('mousedown', this.deselect, true)
     document.documentElement.addEventListener('mouseup', this.handleUp, true)
@@ -173,7 +177,7 @@ export default {
         }
       }
     },
-    deselect: function (e) {
+    deselect (e) {
       const target = e.target || e.srcElement
       const regex = new RegExp('handle-([trmbl]{2})', '')
 
@@ -185,9 +189,8 @@ export default {
         }
       }
     },
-    handleDown: function (handle, e) {
+    handleDown (handle, e) {
       this.handle = handle
-
       if (e.stopPropagation) e.stopPropagation()
       if (e.preventDefault) e.preventDefault()
 
@@ -252,7 +255,6 @@ export default {
     handleMove: function (e) {
       this.mouseX = e.pageX || e.clientX + document.documentElement.scrollLeft
       this.mouseY = e.pageY || e.clientY + document.documentElement.scrollTop
-
       let diffX = this.mouseX - this.lastMouseX + this.mouseOffX
       let diffY = this.mouseY - this.lastMouseY + this.mouseOffY
 
@@ -268,27 +270,27 @@ export default {
         if (this.handle.indexOf('t') >= 0) {
           if (this.elmH - dY < this.minh) this.mouseOffY = (dY - (diffY = this.elmH - this.minh))
           else if (this.elmY + dY < this.parentY) this.mouseOffY = (dY - (diffY = this.parentY - this.elmY))
-          this.elmY += diffY
-          this.elmH -= diffY
+          this.elmY += diffY / this.zoom
+          this.elmH -= diffY / this.zoom
         }
 
         if (this.handle.indexOf('b') >= 0) {
           if (this.elmH + dY < this.minh) this.mouseOffY = (dY - (diffY = this.minh - this.elmH))
           else if (this.elmY + this.elmH + dY > this.parentH) this.mouseOffY = (dY - (diffY = this.parentH - this.elmY - this.elmH))
-          this.elmH += diffY
+          this.elmH += diffY / this.zoom
         }
 
         if (this.handle.indexOf('l') >= 0) {
           if (this.elmW - dX < this.minw) this.mouseOffX = (dX - (diffX = this.elmW - this.minw))
           else if (this.elmX + dX < this.parentX) this.mouseOffX = (dX - (diffX = this.parentX - this.elmX))
-          this.elmX += diffX
-          this.elmW -= diffX
+          this.elmX += diffX / this.zoom
+          this.elmW -= diffX / this.zoom
         }
 
         if (this.handle.indexOf('r') >= 0) {
           if (this.elmW + dX < this.minw) this.mouseOffX = (dX - (diffX = this.minw - this.elmW))
           else if (this.elmX + this.elmW + dX > this.parentW) this.mouseOffX = (dX - (diffX = this.parentW - this.elmX - this.elmW))
-          this.elmW += diffX
+          this.elmW += diffX / this.zoom
         }
 
         this.left = (Math.round(this.elmX / this.grid[0]) * this.grid[0])
@@ -304,9 +306,8 @@ export default {
 
         if (this.elmY + dY < this.parentY) this.mouseOffY = (dY - (diffY = this.parentY - this.elmY))
         else if (this.elmY + this.elmH + dY > this.parentH) this.mouseOffY = (dY - (diffY = this.parentH - this.elmY - this.elmH))
-
-        this.elmX += diffX
-        this.elmY += diffY
+        this.elmX += diffX / this.zoom
+        this.elmY += diffY / this.zoom
 
         if (this.axis === 'x' || this.axis === 'both') {
           this.left = (Math.round(this.elmX / this.grid[0]) * this.grid[0])
