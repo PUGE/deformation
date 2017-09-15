@@ -117,9 +117,8 @@ export default {
     document.documentElement.addEventListener('mousemove', this.handleMove, true)
     document.documentElement.addEventListener('mousedown', this.deselect, true)
     document.documentElement.addEventListener('mouseup', this.handleUp, true)
-
+    // 初始化控件宽高
     if (this.minw > this.w) this.width = this.minw
-
     if (this.minh > this.h) this.height = this.minh
 
     if (this.parent) {
