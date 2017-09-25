@@ -16,7 +16,7 @@
 <script>
 export default {
   replace: true,
-  name: 'vue-draggable-resizable',
+  name: 'deformation',
   props: {
     draggable: { // 是否可被拖动
       type: Boolean, default: true
@@ -28,14 +28,14 @@ export default {
       type: Number,
       default: 200,
       validator: function (val) {
-        return val > 0
+        return val >= 0
       }
     },
     h: { // 高度
       type: Number,
       default: 200,
       validator: function (val) {
-        return val > 0
+        return val >= 0
       }
     },
     minw: { // 最小宽度
@@ -116,8 +116,8 @@ export default {
     document.documentElement.addEventListener('mousedown', this.deselect, true)
     document.documentElement.addEventListener('mouseup', this.handleUp, true)
     // 初始化控件宽高
-    if (this.minw > this.w) this.width = this.minw
-    if (this.minh > this.h) this.height = this.minh
+    if (this.minw > this.w && this.w !== 0) this.width = this.minw
+    if (this.minh > this.h && this.h !== 0) this.height = this.minh
     // 判断只能在父窗口内移动的设置
     if (this.parent) {
       const parentW = parseInt(this.$el.parentNode.clientWidth, 10)
@@ -283,11 +283,13 @@ export default {
   },
   computed: {
     style: function () {
+      const w = this.width === 0? 'auto': this.width + 'px'
+      const h = this.height === 0? 'auto': this.height + 'px'
       return {
         top: this.top + 'px',
         left: this.left + 'px',
-        width: this.width + 'px',
-        height: this.height + 'px'
+        width: w,
+        height: h
       }
     }
   }
