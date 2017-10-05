@@ -320,34 +320,3 @@ Parameters:
 ```html
 <Deformation @dragstop="onDragstop">
 ```
-
-### 陷阱
-
-Be careful to use appropriate values for `x`, `y`, `w`, `h`, `minh` and `minh` props when you want to restrict the component in its parent element.
-
-### 特色
-
-If `resizing`, `parent` and `maximize` props are `true` you can double-click on the element to make it fill the parent.
-
-## 贡献
-
-Any contribution to the code or any part of the documentation and any idea and/or suggestion are very welcome.
-
-``` bash
-# serve with hot reload at localhost:8080
-npm run dev
-
-# distribution build
-npm run build
-
-# build the docs into gh-pages
-npm run docs
-
-# run unit tests
-npm run test
-
-```
-
-## License
-
-[MIT license](LICENSE)
