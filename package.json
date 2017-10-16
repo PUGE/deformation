@@ -1,16 +1,9 @@
 {
   "name": "deformation",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "description": "自由拖动组件",
   "author": "PUGE <my@owo.help>",
   "main": "./index.js",
-  "scripts": {
-    "dev": "node build/dev-server.js",
-    "docs": "webpack --config build/webpack.docs.js",
-    "build": "webpack --config build/webpack.dist.js",
-    "prepublish": "npm run build",
-    "lint": "eslint --ext .js,.vue src test/unit/specs"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/mauricius/vue-draggable-resizable.git"

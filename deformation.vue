@@ -1,5 +1,6 @@
 <template>
   <div class="vdr" id="vdr" :class="{ draggable: draggable, resizable: resizable, active: active , dragging: dragging, resizing: resizing}" @mousedown.stop="elmDown" :style="style">
+    <!-- 如果可改变大小为真 -->
     <template v-if="resizable">
       <div
         class="handle"
@@ -313,6 +314,7 @@ export default {
     font-size: 1px;
     background: #EEE;
     border: 1px solid #333;
+    z-index: 999;
   }
   .handle-tl {
     top: -10px;
