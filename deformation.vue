@@ -143,6 +143,8 @@ export default {
       // 确保事件发生在组件内部
       if (this.$el.contains(target)) {
         if (!this.active) {
+          this.lastMouseX = e.pageX || e.clientX + document.documentElement.scrollLeft
+          this.lastMouseY = e.pageY || e.clientY + document.documentElement.scrollTop
           document.documentElement.addEventListener('mousemove', this.handleMove, true)
           document.documentElement.addEventListener('mousedown', this.deselect, true)
           document.documentElement.addEventListener('mouseup', this.handleUp, true)
@@ -186,6 +188,7 @@ export default {
       // diffX =  当前鼠标位置 - 上次鼠标位置 + ？？
       let diffX = (this.mouseX - this.lastMouseX + this.mouseOffX) / this.zoom
       let diffY = (this.mouseY - this.lastMouseY + this.mouseOffY) / this.zoom
+      console.log(this.mouseX, this.lastMouseX)
       this.mouseOffX = this.mouseOffY = 0
       this.lastMouseX = this.mouseX
       this.lastMouseY = this.mouseY
