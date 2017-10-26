@@ -1,19 +1,7 @@
-<p align="center"><img src="https://rawgit.com/mauricius/vue-draggable-resizable/master/docs/resources/logo.png" alt="logo"></p>
 <h1 align="center">deformation</h1>
 
 
 > 自由拖动缩放组件.
-
-## 目录
-
-* [Features](#features)
-* [Demo](#demo)
-* [Install and basic usage](#install-and-basic-usage)
-  * [Props](#props)
-  * [Events](#events)
-* [Gotchas](#gotchas)
-* [Contributing](#contributing)
-* [License](#license)
 
 ### 特点
 
