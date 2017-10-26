@@ -9,8 +9,8 @@
         @mousedown.stop.prevent="handleDown(handle, $event)"
         :key="handle"
       ></div>
-      <slot></slot>
     </template>
+    <slot></slot>
   </div>
 </template>
 

@@ -228,17 +228,6 @@ Define the array of handles to restrict the element resizing:
 <Deformation :parent="true">
 ```
 
-#### maximize
-类型: `Boolean`<br>
-必要性: `false`<br>
-默认值: `false`
-
-If set to `true` allows the component to fill its parent when double-clicked.
-
-```html
-<Deformation :maximize="true">
-```
-
 ---
 
 ### Events
