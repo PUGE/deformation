@@ -281,7 +281,6 @@ export default {
     position: absolute;
     box-sizing: border-box;
     user-select: none;
-    overflow: hidden;
   }
   .draggable:hover {
     cursor: move;

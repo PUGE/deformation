@@ -1,6 +1,6 @@
 {
   "name": "deformation",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "自由拖动组件",
   "author": "PUGE <my@owo.help>",
   "main": "./index.js",
@@ -10,7 +10,7 @@
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/PUGE/deformationissues"
+    "url": "https://github.com/PUGE/deformation/issues"
   },
   "homepage": "https://github.com/PUGE/deformation",
   "keywords": [
