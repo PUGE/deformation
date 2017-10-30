@@ -1,5 +1,5 @@
 <template>
-  <div class="vdr" id="vdr" :class="{ draggable: draggable, resizable: resizable, active: active , dragging: dragging, resizing: resizing}" @mousedown.stop="elmDown" :style="style">
+  <div class="vdr" id="vdr" :class="{ draggable: draggable, resizable: resizable, active: active , dragging: dragging, resizing: resizing}" @mousedown.stop="elmDown" @dragover='allowDrop($event)' @drop='drop($event)' :style="style">
     <!-- 如果可改变大小为真 -->
     <template v-if="resizable">
       <div
@@ -239,7 +239,7 @@ export default {
         this.$emit('dragging', this.left, this.top)
       }
     },
-    handleUp: function (e) {
+    handleUp (e) {
       this.handle = null
       if (this.resizing) {
         this.resizing = false
@@ -251,7 +251,14 @@ export default {
       }
       this.elmX = this.left
       this.elmY = this.top
-    }
+    },
+    allowDrop (event) {
+      event.preventDefault()
+    },
+    drop (event) {
+      event.preventDefault()
+      this.$emit('drop', event)
+    },
   },
   watch: {
     x: function (newVal) {
@@ -262,9 +269,9 @@ export default {
     }
   },
   computed: {
-    style: function () {
-      const w = this.width === 0? 'auto': this.width + 'px'
-      const h = this.height === 0? 'auto': this.height + 'px'
+    style () {
+      const w = this.w === 0? 'auto': this.w + 'px'
+      const h = this.h === 0? 'auto': this.h + 'px'
       return {
         top: this.top + 'px',
         left: this.left + 'px',
