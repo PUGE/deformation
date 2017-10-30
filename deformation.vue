@@ -261,17 +261,23 @@ export default {
     },
   },
   watch: {
-    x: function (newVal) {
+    x (newVal) {
       this.left = newVal
     },
-    y: function (newVal) {
+    y (newVal) {
       this.top = newVal
+    },
+    w (newVal) {
+      this.width = newVal
+    },
+    h (newVal) {
+      this.height = newVal
     }
   },
   computed: {
     style () {
-      const w = this.w === 0? 'auto': this.w + 'px'
-      const h = this.h === 0? 'auto': this.h + 'px'
+      const w = this.width === 0? 'auto': this.width + 'px'
+      const h = this.height === 0? 'auto': this.height + 'px'
       return {
         top: this.top + 'px',
         left: this.left + 'px',
