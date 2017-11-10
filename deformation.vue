@@ -1,5 +1,5 @@
 <template>
-  <div class="vdr" id="vdr" :class="{ draggable: draggable, resizable: resizable, active: active , dragging: dragging, resizing: resizing}" @mousedown.stop="elmDown" :style="style">
+  <div class="vdr" id="vdr" :class="{ draggable: draggable, resizable: resizable, active: active , dragging: dragging, resizing: resizing}" @mousedown.stop="elmDown" tabindex="0" @keydown="keydown($event)" :style="style">
     <!-- 如果可改变大小为真 -->
     <template v-if="resizable">
       <div
@@ -251,6 +251,15 @@ export default {
       }
       this.elmX = this.left
       this.elmY = this.top
+    },
+    keydown (event) {
+      switch (event.key) {
+        case 'ArrowUp': this.top--; break
+        case 'ArrowLeft': this.left--; break
+        case 'ArrowDown': this.top++; break
+        case 'ArrowRight': this.left++; break
+      }
+      this.$emit('dragging', this.left, this.top)
     }
   },
   watch: {
