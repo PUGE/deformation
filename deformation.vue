@@ -161,6 +161,11 @@ export default {
       }
     },
     deselect (e) { // 取消选择事件
+      this.mouseX = e.pageX || e.clientX + document.documentElement.scrollLeft
+      this.mouseY = e.pageY || e.clientY + document.documentElement.scrollTop
+      this.lastMouseX = this.mouseX
+      this.lastMouseY = this.mouseY
+      
       const target = e.target || e.srcElement
       const regex = new RegExp('handle-([trmbl]{2})', '')
       if (!this.$el.contains(target) && !regex.test(target.className)) {
