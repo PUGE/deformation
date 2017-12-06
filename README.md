@@ -15,8 +15,6 @@
 
 ### 实例
 
-[样品展示](https://mauricius.github.io/vue-draggable-resizable/)
-
 ---
 
 ## 安装 及 使用
