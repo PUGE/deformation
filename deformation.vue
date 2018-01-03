@@ -2,6 +2,11 @@
   <div class="vdr" id="vdr" :class="{ draggable: draggable, resizable: resizable, active: active , dragging: dragging, resizing: resizing}" @mousedown.stop="elmDown" tabindex="0" @keydown="keydown($event)" :style="style">
     <!-- 如果可改变大小为真 -->
     <template v-if="resizable">
+      <!-- 待优化 -->
+      <div class="handle handle-ml" @mousedown.stop.prevent="handleDown('ml')"></div>
+      <div class="handle handle-mr" @mousedown.stop.prevent="handleDown('mr')"></div>
+      <div class="handle handle-tm" @mousedown.stop.prevent="handleDown('tm')"></div>
+      <div class="handle handle-bm" @mousedown.stop.prevent="handleDown('bm')"></div>
       <div class="handle handle-br" @mousedown.stop.prevent="handleDown('br')">
         <svg version="1.1" id="&#x56FE;&#x5C42;_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 700 700" style="enable-background:new 0 0 700 700;" xml:space="preserve">
           <g>
@@ -116,6 +121,7 @@ export default {
     this.elmH = 0
   },
   mounted () {
+    console.log(this)
     // 初始化控件宽高
     if (this.minw > this.w && this.w !== 0) this.width = this.minw
     if (this.minh > this.h && this.h !== 0) this.height = this.minh
@@ -202,10 +208,22 @@ export default {
       let dX = diffX
       let dY = diffY
       if (this.resizing) {
+        if (this.handle.indexOf('t') >= 0) {
+          if (this.elmH - dY < this.minh) this.mouseOffY = (dY - (diffY = this.elmH - this.minh))
+          else if (this.elmY + dY < this.parentY) this.mouseOffY = (dY - (diffY = this.parentY - this.elmY))
+          this.elmY += diffY
+          this.elmH -= diffY
+        }
         if (this.handle.indexOf('b') >= 0) {
           if (this.elmH + dY < this.minh) this.mouseOffY = (dY - (diffY = this.minh - this.elmH))
           else if (this.elmY + this.elmH + dY > this.parentH) this.mouseOffY = (dY - (diffY = this.parentH - this.elmY - this.elmH))
           this.elmH += diffY
+        }
+        if (this.handle.indexOf('l') >= 0) {
+          if (this.elmW - dX < this.minw) this.mouseOffX = (dX - (diffX = this.elmW - this.minw))
+          else if (this.elmX + dX < this.parentX) this.mouseOffX = (dX - (diffX = this.parentX - this.elmX))
+          this.elmX += diffX
+          this.elmW -= diffX
         }
         if (this.handle.indexOf('r') >= 0) {
           if (this.elmW + dX < this.minw) this.mouseOffX = (dX - (diffX = this.minw - this.elmW))
@@ -290,7 +308,6 @@ export default {
 <style scoped>
   .vdr {
     position: absolute;
-    box-sizing: border-box;
     user-select: none;
   }
   .draggable:hover {
@@ -299,12 +316,7 @@ export default {
   .handle {
     display: none;
     position: absolute;
-    width: 25px;
-    height: 25px;
-    font-size: 1px;
     z-index: 999;
-    padding: 5px;
-    background-color: #00000052;
   }
   svg {
     fill: white;
@@ -313,6 +325,54 @@ export default {
     bottom: 0;
     right: 0;
     cursor: se-resize;
+    width: 25px;
+    height: 25px;
+    padding: 5px;
+    background-color: #00000052;
+  }
+ .handle-ml {
+    top: 0;
+    left: -5px;
+    cursor: w-resize;
+    position: absolute;
+    height: 100%;
+    width: 5px;
+  }
+  .handle-ml:hover {
+    background: linear-gradient(to right, rgba(255, 255, 255, 0), #3F51B5);
+  }
+  .handle-mr {
+    top: 0;
+    right: -5px;
+    cursor: w-resize;
+    position: absolute;
+    height: 100%;
+    width: 5px;
+  }
+  .handle-mr:hover {
+    background: linear-gradient(to right, #3F51B5, rgba(255, 255, 255, 0));
+  }
+  .handle-tm {
+    position: absolute;
+    width: 100%;
+    height: 5px;
+    top: -5px;
+    left: 0;
+    cursor: n-resize;
+  }
+  .handle-tm:hover {
+    background: linear-gradient(rgba(255, 255, 255, 0), #3F51B5);
+  }
+  .handle-bm {
+    position: absolute;
+    width: 100%;
+    height: 5px;
+    bottom: -5px;
+    left: 0;
+    cursor: s-resize;
+  }
+  .handle-bm:hover {
+    background: linear-gradient(#3F51B5, rgba(255, 255, 255, 0));
   }
   .active .handle {
     display: block;
