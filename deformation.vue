@@ -2,13 +2,27 @@
   <div class="vdr" id="vdr" :class="{ draggable: draggable, resizable: resizable, active: active , dragging: dragging, resizing: resizing}" @mousedown.stop="elmDown" tabindex="0" @keydown="keydown($event)" :style="style">
     <!-- 如果可改变大小为真 -->
     <template v-if="resizable">
-      <div
-        class="handle"
-        v-for="handle in handles"
-        :class="'handle-' + handle"
-        @mousedown.stop.prevent="handleDown(handle, $event)"
-        :key="handle"
-      ></div>
+      <div class="handle handle-br" @mousedown.stop.prevent="handleDown('br')">
+        <svg version="1.1" id="&#x56FE;&#x5C42;_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 700 700" style="enable-background:new 0 0 700 700;" xml:space="preserve">
+          <g>
+            <g>
+              <defs>
+                <rect id="SVGID_1_" x="16.92" y="17.4" width="666" height="666"/>
+              </defs>
+              <clipPath id="SVGID_2_">
+                <use xlink:href="#SVGID_1_"  style="overflow:visible;"/>
+              </clipPath>
+              <path style="clip-path:url(#SVGID_2_);" d="M676.131,422.63c9.053-9.037,9.053-22.591,0-31.631l-4.525-4.518
+                c-9.049-9.037-22.624-9.037-31.672,0L386.531,639.52c-9.049,9.037-9.049,22.595,0,31.631l4.525,4.518
+                c9.05,9.037,22.624,9.037,31.676,0L676.131,422.63z M603.732,61.146c9.05-9.036,9.05-22.591,0-31.627L599.208,25
+                c-9.05-9.041-22.624-9.041-31.677,0L24.528,567.225c-9.049,9.036-9.049,22.591,0,31.627l4.525,4.518
+                c9.05,9.04,22.627,9.04,31.677,0L603.732,61.146z M639.934,241.89c9.049-9.037,9.049-22.595,0-31.631l-4.525-4.518
+                c-9.054-9.037-22.628-9.037-31.677,0l-398.2,397.63c-9.053,9.04-9.053,22.595,0,31.631l4.525,4.518
+                c9.05,9.037,22.624,9.037,31.673,0L639.934,241.89z M639.934,241.89"/>
+            </g>
+          </g>
+        </svg>
+      </div>
     </template>
     <slot></slot>
   </div>
@@ -65,12 +79,6 @@ export default {
       type: Number,
       default: 1
     },
-    handles: {
-      type: Array,
-      default: function () {
-        return ['tl', 'tm', 'tr', 'mr', 'br', 'bm', 'bl', 'ml']
-      }
-    },
     axis: { // 定义组件可以拖动的轴线
       type: String,
       default: 'both',
@@ -111,7 +119,6 @@ export default {
     // 初始化控件宽高
     if (this.minw > this.w && this.w !== 0) this.width = this.minw
     if (this.minh > this.h && this.h !== 0) this.height = this.minh
-    // 判断只能在父窗口内移动的设置
     if (this.parent) {
       const parentW = parseInt(this.$el.parentNode.clientWidth, 10)
       const parentH = parseInt(this.$el.parentNode.clientHeight, 10)
@@ -178,13 +185,9 @@ export default {
         }
       }
     },
-    handleDown (handle, e) { // 拖动点按下事件
+    handleDown (handle) { // 拖动点按下事件
       // 将handle设置为当前元素
       this.handle = handle
-      // 终止事件在传播过程的捕获、目标处理或起泡阶段进一步传播
-      if (e.stopPropagation) e.stopPropagation()
-      // 取消事件的默认动作。
-      if (e.preventDefault) e.preventDefault()
       this.resizing = true
     },
     handleMove (e) {
@@ -199,22 +202,10 @@ export default {
       let dX = diffX
       let dY = diffY
       if (this.resizing) {
-        if (this.handle.indexOf('t') >= 0) {
-          if (this.elmH - dY < this.minh) this.mouseOffY = (dY - (diffY = this.elmH - this.minh))
-          else if (this.elmY + dY < this.parentY) this.mouseOffY = (dY - (diffY = this.parentY - this.elmY))
-          this.elmY += diffY
-          this.elmH -= diffY
-        }
         if (this.handle.indexOf('b') >= 0) {
           if (this.elmH + dY < this.minh) this.mouseOffY = (dY - (diffY = this.minh - this.elmH))
           else if (this.elmY + this.elmH + dY > this.parentH) this.mouseOffY = (dY - (diffY = this.parentH - this.elmY - this.elmH))
           this.elmH += diffY
-        }
-        if (this.handle.indexOf('l') >= 0) {
-          if (this.elmW - dX < this.minw) this.mouseOffX = (dX - (diffX = this.elmW - this.minw))
-          else if (this.elmX + dX < this.parentX) this.mouseOffX = (dX - (diffX = this.parentX - this.elmX))
-          this.elmX += diffX
-          this.elmW -= diffX
         }
         if (this.handle.indexOf('r') >= 0) {
           if (this.elmW + dX < this.minw) this.mouseOffX = (dX - (diffX = this.minw - this.elmW))
@@ -306,58 +297,21 @@ export default {
     cursor: move;
   }
   .handle {
-    box-sizing: border-box;
     display: none;
     position: absolute;
-    width: 10px;
-    height: 10px;
+    width: 25px;
+    height: 25px;
     font-size: 1px;
-    background: #EEE;
-    border: 1px solid #333;
     z-index: 999;
+    padding: 5px;
+    background-color: #00000052;
   }
-  .handle-tl {
-    top: -10px;
-    left: -10px;
-    cursor: nw-resize;
-  }
-  .handle-tm {
-    top: -10px;
-    left: 50%;
-    margin-left: -5px;
-    cursor: n-resize;
-  }
-  .handle-tr {
-    top: -10px;
-    right: -10px;
-    cursor: ne-resize;
-  }
-  .handle-ml {
-    top: 50%;
-    margin-top: -5px;
-    left: -10px;
-    cursor: w-resize;
-  }
-  .handle-mr {
-    top: 50%;
-    margin-top: -5px;
-    right: -10px;
-    cursor: e-resize;
-  }
-  .handle-bl {
-    bottom: -10px;
-    left: -10px;
-    cursor: sw-resize;
-  }
-  .handle-bm {
-    bottom: -10px;
-    left: 50%;
-    margin-left: -5px;
-    cursor: s-resize;
+  svg {
+    fill: white;
   }
   .handle-br {
-    bottom: -10px;
-    right: -10px;
+    bottom: 0;
+    right: 0;
     cursor: se-resize;
   }
   .active .handle {

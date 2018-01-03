@@ -165,25 +165,6 @@ export default {
 <Deformation :y="0">
 ```
 
-#### handles
-类型: `Array`<br>
-必要性: `false`<br>
-默认值: `['tl', 'tm', 'tr', 'mr', 'br', 'bm', 'bl', 'ml']`
-
-Define the array of handles to restrict the element resizing:
-* `tl` - Top left
-* `tm` - Top middle
-* `tr` - Top right
-* `mr` - Middle right
-* `br` - Bottom right
-* `bm` - Bottom middle
-* `bl` - Bottom left
-* `ml` - Middle left
-
-```html
-<Deformation :handles="['tm','bm','ml','mr']">
-```
-
 #### axis
 类型: `String`<br>
 必要性: `false`<br>
