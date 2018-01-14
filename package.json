@@ -1,12 +1,12 @@
 {
   "name": "deformation",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "自由拖动组件",
   "author": "PUGE <my@owo.help>",
   "main": "./index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/mauricius/vue-draggable-resizable.git"
+    "url": "https://github.com/puge/deformation.git"
   },
   "license": "MIT",
   "bugs": {
