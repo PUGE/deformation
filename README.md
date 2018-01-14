@@ -185,6 +185,19 @@ export default {
 <Deformation :grid="[1,1]">
 ```
 
+#### restrain
+类型: `Number`<br>
+必要性: `false`<br>
+默认值: `0`
+
+约束元素宽高只能是restrain的倍数.
+
+```html
+<Deformation :restrain="100">
+```
+
+---
+
 #### parent
 类型: `Boolean`<br>
 必要性: `false`<br>
