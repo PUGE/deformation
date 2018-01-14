@@ -80,9 +80,11 @@
       },
       grid: {
         type: Array,
-        default: function () {
-          return [1, 1]
-        }
+        default: [1, 1]
+      },
+      restrain: { // 约束组件大小
+        type: Number,
+        default: 0
       },
       parent: {
         type: Boolean, default: false
@@ -240,8 +242,20 @@
           this.$emit('dragging', this.left, this.top)
         }
       },
+      getRestrain (num) {
+        const restrain = this.restrain
+        return (num / restrain).toFixed(0) * restrain
+      },
       handleUp (e) {
         this.handle = null
+        // 约束
+        const restrain = this.restrain
+        if (restrain && restrain > 0) {
+          this.left = this.getRestrain(this.left)
+          this.top = this.getRestrain(this.top)
+          this.width = this.getRestrain(this.width)
+          this.height = this.getRestrain(this.height)
+        }
         if (this.resizing) {
           this.resizing = false
           this.$emit('resizestop', this.left, this.top, this.width, this.height)
@@ -254,6 +268,7 @@
         this.elmY = this.top
       },
       keydown (event) {
+        // 微调位置
         switch (event.key) {
           case 'ArrowUp': this.top--; break
           case 'ArrowLeft': this.left--; break
