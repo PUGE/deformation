@@ -80,7 +80,9 @@
       },
       grid: {
         type: Array,
-        default: [1, 1]
+        default: () => {
+          return [1, 1]
+        }
       },
       restrain: { // 约束组件大小
         type: Number,
