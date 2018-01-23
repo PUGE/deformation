@@ -345,7 +345,7 @@
     width: 25px;
     height: 25px;
     padding: 5px;
-    background-color: #00000052;
+    background-color: darkviolet;
   }
  .handle-ml {
     top: 0;
