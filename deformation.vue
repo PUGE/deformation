@@ -289,7 +289,7 @@
           case 'ArrowLeft': this.left--; this.$emit('dragstop', this.left, this.top);  break
           case 'ArrowDown': this.top++; this.$emit('dragstop', this.left, this.top);  break
           case 'ArrowRight': this.left++; this.$emit('dragstop', this.left, this.top);  break
-          default: this.$emit('@keydown', event);
+          default: this.$emit('keydown', event);
         }
       }
     },
