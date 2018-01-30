@@ -287,6 +287,14 @@ Parameters:
 
 组件拖动结束事件.
 
+#### keydown
+
+必要性: `false`<br>
+Parameters:
+* `event` 键值
+
+按键事件.
+
 ```html
 <Deformation @dragstop="onDragstop">
 ```
