@@ -1,5 +1,5 @@
 <template>
-  <div class="vdr" id="vdr" :class="{ draggable: draggable, resizable: resizable, active: active , dragging: dragging, resizing: resizing}" @mousedown.stop="elmDown" tabindex="0" @keydown="keydown($event)" :style="style">
+  <div class="vdr" id="vdr" :class="{ draggable, resizable, active , dragging, resizing}" @mousedown.stop="elmDown" tabindex="0" @keydown="keydown($event)" :style="style">
     <!-- 如果可改变大小为真 -->
     <template v-if="resizable">
       <!-- 待优化 -->
@@ -290,7 +290,7 @@
           case 'ArrowDown': this.top++; break
           case 'ArrowRight': this.left++; break
         }
-        this.$emit('dragging', this.left, this.top)
+        this.$emit('dragstop', this.left, this.top)
       }
     },
     watch: {
@@ -336,7 +336,7 @@
     z-index: 999;
   }
   svg {
-    fill: white;
+    fill: darkslateblue;
   }
   .handle-br {
     bottom: 0;
@@ -345,7 +345,7 @@
     width: 25px;
     height: 25px;
     padding: 5px;
-    background-color: darkviolet;
+    background-color: white;
   }
  .handle-ml {
     top: 0;
