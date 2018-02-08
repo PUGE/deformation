@@ -1,7 +1,7 @@
 <template>
   <div class="vdr" id="vdr" :class="{ draggable, resizable, active , dragging, resizing}" @mousedown.stop="elmDown" tabindex="0" @keydown.stop="keydown($event)" :style="style">
     <!-- 如果可改变大小为真 -->
-    <template v-if="resizable">
+    <template v-if="resizable && !disable">
       <!-- 待优化 -->
       <div class="handle handle-ml" @mousedown.stop.prevent="handleDown('ml')"></div>
       <div class="handle handle-mr" @mousedown.stop.prevent="handleDown('mr')"></div>
@@ -106,6 +106,9 @@
       },
       maximize: {
         type: Boolean, default: false
+      },
+      disable: {
+        type: Boolean, default: false
       }
     },
     created: function () {
@@ -156,6 +159,8 @@
     },
     methods: {
       elmDown (e) { // 组件被按下事件
+        // 判断是否支持键盘微调
+        if (this.disable || !this.resizable) return
         const target = e.target || e.srcElement
         // 确保事件发生在组件内部
         if (this.$el.contains(target)) {
@@ -283,6 +288,8 @@
         this.elmY = this.top
       },
       keydown (event) {
+        // 判断是否支持键盘微调
+        if (this.disable || !this.resizable) return
         // 微调位置
         switch (event.key) {
           case 'ArrowUp': this.top--; this.$emit('dragstop', this.left, this.top); break
