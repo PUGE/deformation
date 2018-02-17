@@ -203,7 +203,7 @@ export default {
 必要性: `false`<br>
 默认值: `false`
 
-限制元素移动的速度以及维度.
+限制元素只能在父元素内拖动
 
 ```html
 <Deformation :parent="true">
