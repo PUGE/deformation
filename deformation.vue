@@ -159,6 +159,8 @@
     },
     methods: {
       elmDown (e) { // 组件被按下事件
+        // 阻止默认事件
+        e.preventDefault()
         // 判断是否支持键盘微调
         if (this.disable || !this.resizable) return
         const target = e.target || e.srcElement
