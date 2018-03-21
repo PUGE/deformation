@@ -37,6 +37,24 @@
   export default {
     replace: true,
     name: 'deformation',
+    data () {
+      return {
+        parentX: 0,
+        parentW: 9999,
+        parentY: 0,
+        parentH: 9999,
+        mouseX: 0,
+        mouseY: 0,
+        lastMouseX: 0,
+        lastMouseY: 0,
+        mouseOffX: 0,
+        mouseOffY: 0,
+        elmX: 0,
+        elmY: 0,
+        elmW: 0,
+        elmH: 0
+      }
+    },
     props: {
       draggable: { // 是否可被拖动
         type: Boolean, default: true
@@ -47,15 +65,15 @@
       w: { // 宽度
         type: Number,
         default: 200,
-        validator: function (val) {
-          return typeof val === 'number'
+        validator: (val) => {
+          return (typeof val === 'number' && val > 0)
         }
       },
       h: { // 高度
         type: Number,
         default: 200,
-        validator: function (val) {
-          return typeof val === 'number'
+        validator: (val) => {
+          return (typeof val === 'number' && val > 0)
         }
       },
       minw: { // 最小宽度
@@ -104,44 +122,23 @@
       parent: {
         type: Boolean, default: false
       },
-      maximize: {
-        type: Boolean, default: false
-      },
       disable: {
         type: Boolean, default: false
       }
     },
-    created: function () {
-      this.parentX = 0
-      this.parentW = 9999
-      this.parentY = 0
-      this.parentH = 9999
-      this.mouseX = 0
-      this.mouseY = 0
-      this.lastMouseX = 0
-      this.lastMouseY = 0
-      this.mouseOffX = 0
-      this.mouseOffY = 0
-      this.elmX = 0
-      this.elmY = 0
-      this.elmW = 0
-      this.elmH = 0
-    },
     mounted () {
-      console.log(this)
       // 初始化控件宽高
-      if (this.minw > this.w && this.w !== 0) this.width = this.minw
-      if (this.minh > this.h && this.h !== 0) this.height = this.minh
+      if (this.minw > this.w) this.width = this.minw
+      if (this.minh > this.h) this.height = this.minh
+      // 判断是否只能在父级元素中拖动
       if (this.parent) {
-        const parentW = parseInt(this.$el.parentNode.clientWidth, 10)
-        const parentH = parseInt(this.$el.parentNode.clientHeight, 10)
-        
-        this.parentW = parentW
-        this.parentH = parentH
-        if (this.w > this.parentW) this.width = parentW
-        if (this.h > this.parentH) this.height = parentH
-        if ((this.x + this.w) > this.parentW) this.width = parentW - this.x
-        if ((this.y + this.h) > this.parentH) this.height = parentH - this.y
+        this.parentW = parseInt(this.$el.parentNode.clientWidth, 10)
+        this.parentH = parseInt(this.$el.parentNode.clientHeight, 10)
+
+        if (this.w > this.parentW) this.width = this.parentW
+        if (this.h > this.parentH) this.height = this.parentH
+        if ((this.x + this.width) > this.parentW) this.left = parentW - this.width
+        if ((this.y + this.height) > this.parentH) this.top = parentH - this.height
       }
       this.$emit('resizing', this.left, this.top, this.width, this.height)
     },
