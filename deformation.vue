@@ -39,6 +39,8 @@
     name: 'deformation',
     data () {
       return {
+        // 是否支持passive
+        passiveSupported: false,
         parentX: 0,
         parentW: 9999,
         parentY: 0,
@@ -140,6 +142,14 @@
         if ((this.x + this.width) > this.parentW) this.left = parentW - this.width
         if ((this.y + this.height) > this.parentH) this.top = parentH - this.height
       }
+      // 判断浏览器是否支持passive
+      try {
+        Object.defineProperty({}, "passive", {
+          get: function() {
+            this.passiveSupported = true;
+          }
+        });
+      } catch(err) {}
       this.$emit('resizing', this.left, this.top, this.width, this.height)
     },
     data: function () {
@@ -158,6 +168,7 @@
       elmDown (e) { // 组件被按下事件
         // 阻止默认事件
         e.preventDefault()
+        const passiveSupported = this.passiveSupported
         // 判断是否支持键盘微调
         if (this.disable || !this.resizable) return
         const target = e.target || e.srcElement
@@ -166,9 +177,9 @@
           if (!this.active) {
             this.lastMouseX = e.pageX || e.clientX + document.documentElement.scrollLeft
             this.lastMouseY = e.pageY || e.clientY + document.documentElement.scrollTop
-            document.documentElement.addEventListener('mousemove', this.handleMove, true)
-            document.documentElement.addEventListener('mousedown', this.deselect, true)
-            document.documentElement.addEventListener('mouseup', this.handleUp, true)
+            document.documentElement.addEventListener('mousemove', this.handleMove, passiveSupported ? { passive: true } :true)
+            document.documentElement.addEventListener('mousedown', this.deselect, passiveSupported ? { passive: true } :true)
+            document.documentElement.addEventListener('mouseup', this.handleUp, passiveSupported ? { passive: true } :true)
             this.active = true
             this.$emit('activated')
           }
