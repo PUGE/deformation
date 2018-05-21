@@ -152,7 +152,7 @@
       } catch(err) {}
       this.$emit('resizing', this.left, this.top, this.width, this.height)
     },
-    data: function () {
+    data () {
       return {
         top: this.y,
         left: this.x,
@@ -341,8 +341,10 @@
 
 <style scoped>
   .vdr {
+    padding: 0;
     position: absolute;
     user-select: none;
+    border-color: #45DBF7;
   }
   .draggable:hover {
     cursor: move;
@@ -353,7 +355,7 @@
     z-index: 999;
   }
   svg {
-    fill: darkslateblue;
+    fill: #45DBF7;
   }
   .handle-br {
     bottom: 0;
@@ -362,7 +364,8 @@
     width: 25px;
     height: 25px;
     padding: 5px;
-    background-color: white;
+    border-top: 2px solid #45DBF7;
+    border-left: 2px solid #45DBF7;
   }
  .handle-ml {
     top: 0;
@@ -410,6 +413,11 @@
   }
   .active .handle {
     display: block;
+  }
+  .active {
+    padding: 0;
+    background-color: rgba(150, 150, 150, 0.3);
+    border-color: #45DBF7;
   }
   .icon {
     text-align: center;
