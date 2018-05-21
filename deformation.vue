@@ -8,25 +8,7 @@
       <div class="handle handle-tm" @mousedown.stop.prevent="handleDown('tm')"></div>
       <div class="handle handle-bm" @mousedown.stop.prevent="handleDown('bm')"></div>
       <div class="handle handle-br" @mousedown.stop.prevent="handleDown('br')">
-        <svg version="1.1" id="&#x56FE;&#x5C42;_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 700 700" style="enable-background:new 0 0 700 700;" xml:space="preserve">
-          <g>
-            <g>
-              <defs>
-                <rect id="SVGID_1_" x="16.92" y="17.4" width="666" height="666"/>
-              </defs>
-              <clipPath id="SVGID_2_">
-                <use xlink:href="#SVGID_1_"  style="overflow:visible;"/>
-              </clipPath>
-              <path style="clip-path:url(#SVGID_2_);" d="M676.131,422.63c9.053-9.037,9.053-22.591,0-31.631l-4.525-4.518
-                c-9.049-9.037-22.624-9.037-31.672,0L386.531,639.52c-9.049,9.037-9.049,22.595,0,31.631l4.525,4.518
-                c9.05,9.037,22.624,9.037,31.676,0L676.131,422.63z M603.732,61.146c9.05-9.036,9.05-22.591,0-31.627L599.208,25
-                c-9.05-9.041-22.624-9.041-31.677,0L24.528,567.225c-9.049,9.036-9.049,22.591,0,31.627l4.525,4.518
-                c9.05,9.04,22.627,9.04,31.677,0L603.732,61.146z M639.934,241.89c9.049-9.037,9.049-22.595,0-31.631l-4.525-4.518
-                c-9.054-9.037-22.628-9.037-31.677,0l-398.2,397.63c-9.053,9.04-9.053,22.595,0,31.631l4.525,4.518
-                c9.05,9.037,22.624,9.037,31.673,0L639.934,241.89z M639.934,241.89"/>
-            </g>
-          </g>
-        </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 17"><defs></defs><g id="图层_2" data-name="图层 2"><g id="图层_2-2" data-name="图层 2"><rect class="cls-1" x="2.63" y="-0.2" width="1" height="6.65" transform="translate(-1.3 3.13) rotate(-45)"/><path class="cls-1" d="M.5,5.78a.5.5,0,0,1-.5-.5V0H5.28a.5.5,0,0,1,.5.5.5.5,0,0,1-.5.5H1V5.28A.5.5,0,0,1,.5,5.78Z"/><path class="cls-1" d="M16.3,5.78a.5.5,0,0,1-.5-.5V1H11.52a.5.5,0,0,1,0-1H16.8V5.28A.5.5,0,0,1,16.3,5.78Z"/><path class="cls-1" d="M5.28,16.8H0V11.52a.5.5,0,0,1,1,0V15.8H5.28a.5.5,0,0,1,.5.5A.5.5,0,0,1,5.28,16.8Z"/><path class="cls-1" d="M16.22,16.72a.52.52,0,0,1-.35-.14l-4.7-4.7a.5.5,0,0,1,.71-.71l4.7,4.7a.51.51,0,0,1,0,.71A.54.54,0,0,1,16.22,16.72Z"/><path class="cls-1" d="M17,17H11.72a.5.5,0,1,1,0-1H16V11.72a.5.5,0,1,1,1,0Z"/></g></g></svg>
       </div>
     </template>
     <slot></slot>
