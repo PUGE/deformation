@@ -398,6 +398,7 @@
   }
   .active {
     padding: 0;
+    border: 2px solid rgba(255, 255, 255, 0);
     background-color: rgba(150, 150, 150, 0.3);
     border-color: #45DBF7;
   }
