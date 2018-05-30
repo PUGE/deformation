@@ -274,7 +274,10 @@
         }
         if (this.dragging) {
           this.dragging = false
-          this.$emit('dragstop', this.left, this.top)
+          // 如果位置没有改变 不向外发送位置改变事件
+          if (this.left !== this.elmX || this.top !== this.elmY) {
+            this.$emit('dragstop', this.left, this.top)
+          }
         }
         this.elmX = this.left
         this.elmY = this.top
@@ -346,8 +349,6 @@
     width: 25px;
     height: 25px;
     padding: 5px;
-    border-top: 2px solid #45DBF7;
-    border-left: 2px solid #45DBF7;
   }
  .handle-ml {
     top: 0;
@@ -398,9 +399,7 @@
   }
   .active {
     padding: 0;
-    border: 2px solid rgba(255, 255, 255, 0);
     background-color: rgba(150, 150, 150, 0.3);
-    border-color: #45DBF7;
   }
   .icon {
     text-align: center;
