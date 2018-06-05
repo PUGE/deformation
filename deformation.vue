@@ -1,5 +1,5 @@
 <template>
-  <div class="vdr" id="vdr" :class="{ draggable, resizable, active , dragging, resizing}" @mousedown.stop="elmDown" tabindex="0" @keydown.stop="keydown($event)" :style="style">
+  <div class="vdr" id="vdr" :class="{ draggable, resizable, active , dragging, resizing}" @mousedown.stop="elmDown" tabindex="0" :style="style">
     <!-- 如果可改变大小为真 -->
     <template v-if="resizable && !disable">
       <!-- 待优化 -->
@@ -152,7 +152,7 @@
         e.preventDefault()
         const passiveSupported = this.passiveSupported
         // 判断是否支持键盘微调
-        if (this.disable || !this.resizable) return
+        if (this.disable || !this.draggable) return
         const target = e.target || e.srcElement
         // 确保事件发生在组件内部
         if (this.$el.contains(target)) {
@@ -274,25 +274,10 @@
         }
         if (this.dragging) {
           this.dragging = false
-          // 如果位置没有改变 不向外发送位置改变事件
-          if (this.left !== this.elmX || this.top !== this.elmY) {
-            this.$emit('dragstop', this.left, this.top)
-          }
+          this.$emit('dragstop', this.left, this.top)
         }
         this.elmX = this.left
         this.elmY = this.top
-      },
-      keydown (event) {
-        // 判断是否支持键盘微调
-        if (this.disable || !this.resizable) return
-        // 微调位置
-        switch (event.key) {
-          case 'ArrowUp': this.top--; this.$emit('dragstop', this.left, this.top); break
-          case 'ArrowLeft': this.left--; this.$emit('dragstop', this.left, this.top);  break
-          case 'ArrowDown': this.top++; this.$emit('dragstop', this.left, this.top);  break
-          case 'ArrowRight': this.left++; this.$emit('dragstop', this.left, this.top);  break
-          default: this.$emit('keydown', event);
-        }
       }
     },
     watch: {
@@ -349,6 +334,8 @@
     width: 25px;
     height: 25px;
     padding: 5px;
+    border-top: 2px solid #45DBF7;
+    border-left: 2px solid #45DBF7;
   }
  .handle-ml {
     top: 0;
@@ -399,7 +386,9 @@
   }
   .active {
     padding: 0;
+    border: 2px solid rgba(255, 255, 255, 0);
     background-color: rgba(150, 150, 150, 0.3);
+    border-color: #45DBF7;
   }
   .icon {
     text-align: center;
