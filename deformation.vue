@@ -1,5 +1,5 @@
 <template>
-  <div class="vdr" id="vdr" :class="{ draggable, resizable, active , dragging, resizing}" @mousedown.stop="elmDown" tabindex="0" :style="style">
+  <div class="vdr" id="vdr" :class="{ draggable: draggable && !disable, resizable: resizable && !disable, active , dragging, resizing}" @mousedown.stop="elmDown" tabindex="0" :style="style">
     <!-- 如果可改变大小为真 -->
     <template v-if="resizable && !disable">
       <!-- 待优化 -->
