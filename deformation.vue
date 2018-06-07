@@ -143,7 +143,21 @@
         resizing: false,
         dragging: false,
         active: false,
-        handle: null
+        handle: null,
+        parentX: 0,
+        parentW: 9999,
+        parentY: 0,
+        parentH: 9999,
+        mouseX: 0,
+        mouseY: 0,
+        lastMouseX: 0,
+        lastMouseY: 0,
+        mouseOffX: 0,
+        mouseOffY: 0,
+        elmX: 0,
+        elmY: 0,
+        elmW: 0,
+        elmH: 0
       }
     },
     methods: {
@@ -165,8 +179,8 @@
             this.active = true
             this.$emit('activated')
           }
-          this.elmX = parseInt(this.$el.style.left)
-          this.elmY = parseInt(this.$el.style.top)
+          this.elmX = parseInt(this.left)
+          this.elmY = parseInt(this.top)
           this.elmW = this.$el.offsetWidth || this.$el.clientWidth
           this.elmH = this.$el.offsetHeight || this.$el.clientHeight
           if (this.draggable) {
