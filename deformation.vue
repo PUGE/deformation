@@ -288,7 +288,7 @@
         }
         if (this.dragging) {
           this.dragging = false
-          this.$emit('dragstop', this.left, this.top)
+          this.$emit('dragstop', [this.left, this.top])
         }
         this.elmX = this.left
         this.elmY = this.top
