@@ -56,6 +56,9 @@ export default {
       y: 0
     }
   },
+  components: {
+    Deformation
+  },
   methods: {
     onResize: function (x, y, width, height) {
       this.x = x
@@ -75,22 +78,40 @@ export default {
 ### 参数
 
 #### draggable
-类型: `Boolean`<br>
+类型: `Boolean` 或 `Number`<br>
 必要性: `false`<br>
 默认值: `true`
 
 定义组件是否可以拖动.
+
+| 参数值       | 效果         | 
+| ----------- |:-------------:|
+|true | 组件可以在x轴,y轴方向自由拖动 |
+|false | 组件无法拖动 |
+|0 | 组件无法拖动 |
+|1 | 组件可以在x轴,y轴方向自由拖动 |
+|2 | 组件可以在x轴方向自由拖动 |
+|3 | 组件可以在y轴方向自由拖动 |
 
 ```html
 <Deformation :draggable="false">
 ```
 
 #### resizable
-类型: `Boolean`<br>
+类型: `Boolean` 或 `Number`<br>
 必要性: `false`<br>
 默认值: `true`
 
 定义组件是否可以调整大小.
+
+| 参数值       | 效果         | 
+| ----------- |:-------------:|
+|true | 组件可以在x轴,y轴方向调整大小 |
+|false | 组件无法拖动 |
+|0 | 组件无法拖动 |
+|1 | 组件可以在x轴,y轴方向调整大小 |
+|2 | 组件可以在x轴方向调整大小 |
+|3 | 组件可以在y轴方向调整大小 |
 
 ```html
 <Deformation :resizable="false">
@@ -160,17 +181,6 @@ export default {
 
 ```html
 <Deformation :y="0">
-```
-
-#### axis
-类型: `String`<br>
-必要性: `false`<br>
-默认值: `both`
-
-定义组件可以拖动的轴线. 有效值为: `x`, `y`, `both`.
-
-```html
-<Deformation :axis="x">
 ```
 
 #### grid

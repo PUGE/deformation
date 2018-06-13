@@ -3,11 +3,11 @@
     <!-- 如果可改变大小为真 -->
     <template v-if="resizable && !disable">
       <!-- 待优化 -->
-      <div class="handle handle-ml" @mousedown.stop.prevent="handleDown('ml')"></div>
-      <div class="handle handle-mr" @mousedown.stop.prevent="handleDown('mr')"></div>
-      <div class="handle handle-tm" @mousedown.stop.prevent="handleDown('tm')"></div>
-      <div class="handle handle-bm" @mousedown.stop.prevent="handleDown('bm')"></div>
-      <div class="handle handle-br" @mousedown.stop.prevent="handleDown('br')">
+      <div class="handle handle-ml" v-if="resizable === true || resizable === 1 || resizable === 2" @mousedown.stop.prevent="handleDown('ml')"></div>
+      <div class="handle handle-mr" v-if="resizable === true || resizable === 1 || resizable === 2" @mousedown.stop.prevent="handleDown('mr')"></div>
+      <div class="handle handle-tm" v-if="resizable === true || resizable === 1 || resizable === 3" @mousedown.stop.prevent="handleDown('tm')"></div>
+      <div class="handle handle-bm" v-if="resizable === true || resizable === 1 || resizable === 3" @mousedown.stop.prevent="handleDown('bm')"></div>
+      <div class="handle handle-br" v-if="resizable === true || resizable === 1" @mousedown.stop.prevent="handleDown('br')">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 17"><defs></defs><g id="图层_2" data-name="图层 2"><g id="图层_2-2" data-name="图层 2"><rect class="cls-1" x="2.63" y="-0.2" width="1" height="6.65" transform="translate(-1.3 3.13) rotate(-45)"/><path class="cls-1" d="M.5,5.78a.5.5,0,0,1-.5-.5V0H5.28a.5.5,0,0,1,.5.5.5.5,0,0,1-.5.5H1V5.28A.5.5,0,0,1,.5,5.78Z"/><path class="cls-1" d="M16.3,5.78a.5.5,0,0,1-.5-.5V1H11.52a.5.5,0,0,1,0-1H16.8V5.28A.5.5,0,0,1,16.3,5.78Z"/><path class="cls-1" d="M5.28,16.8H0V11.52a.5.5,0,0,1,1,0V15.8H5.28a.5.5,0,0,1,.5.5A.5.5,0,0,1,5.28,16.8Z"/><path class="cls-1" d="M16.22,16.72a.52.52,0,0,1-.35-.14l-4.7-4.7a.5.5,0,0,1,.71-.71l4.7,4.7a.51.51,0,0,1,0,.71A.54.54,0,0,1,16.22,16.72Z"/><path class="cls-1" d="M17,17H11.72a.5.5,0,1,1,0-1H16V11.72a.5.5,0,1,1,1,0Z"/></g></g></svg>
       </div>
     </template>
@@ -41,10 +41,12 @@
     },
     props: {
       draggable: { // 是否可被拖动
-        type: Boolean, default: true
+        type: [Boolean, Number],
+        default: true
       },
       resizable: { // 是否可改变大小
-        type: Boolean, default: true
+        type: [Boolean, Number],
+        default: true
       },
       w: { // 宽度
         type: Number,
@@ -85,13 +87,6 @@
       zoom: {
         type: Number,
         default: 1
-      },
-      axis: { // 定义组件可以拖动的轴线
-        type: String,
-        default: 'both',
-        validator: function (val) {
-          return ['x', 'y', 'both'].indexOf(val) !== -1
-        }
       },
       grid: {
         type: Array,
@@ -165,7 +160,7 @@
         // 阻止默认事件
         e.preventDefault()
         const passiveSupported = this.passiveSupported
-        // 判断是否支持键盘微调
+        // 判断是否支持拖动
         if (this.disable || !this.draggable) return
         const target = e.target || e.srcElement
         // 确保事件发生在组件内部
@@ -183,9 +178,7 @@
           this.elmY = parseInt(this.top)
           this.elmW = this.$el.offsetWidth || this.$el.clientWidth
           this.elmH = this.$el.offsetHeight || this.$el.clientHeight
-          if (this.draggable) {
-            this.dragging = true
-          }
+          this.dragging = true
         }
       },
       deselect (e) { // 取消选择事件
@@ -259,10 +252,10 @@
           }
           this.elmX += diffX
           this.elmY += diffY
-          if (this.axis === 'x' || this.axis === 'both') {
+          if (this.draggable === 2 || this.draggable === 1 || this.draggable === true) {
             this.left = (Math.round(this.elmX / this.grid[0]) * this.grid[0])
           }
-          if (this.axis === 'y' || this.axis === 'both') {
+          if (this.draggable === 3 || this.draggable === 1 || this.draggable === true) {
             this.top = (Math.round(this.elmY / this.grid[1]) * this.grid[1])
           }
           this.$emit('dragging', this.left, this.top)
