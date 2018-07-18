@@ -19,26 +19,6 @@
   export default {
     replace: true,
     name: 'deformation',
-    data () {
-      return {
-        // 是否支持passive
-        passiveSupported: false,
-        parentX: 0,
-        parentW: 9999,
-        parentY: 0,
-        parentH: 9999,
-        mouseX: 0,
-        mouseY: 0,
-        lastMouseX: 0,
-        lastMouseY: 0,
-        mouseOffX: 0,
-        mouseOffY: 0,
-        elmX: 0,
-        elmY: 0,
-        elmW: 0,
-        elmH: 0
-      }
-    },
     props: {
       draggable: { // 是否可被拖动
         type: [Boolean, Number],
@@ -105,30 +85,6 @@
         type: Boolean, default: false
       }
     },
-    mounted () {
-      // 初始化控件宽高
-      if (this.minw > this.w) this.width = this.minw
-      if (this.minh > this.h) this.height = this.minh
-      // 判断是否只能在父级元素中拖动
-      if (this.parent) {
-        this.parentW = parseInt(this.$el.parentNode.clientWidth, 10)
-        this.parentH = parseInt(this.$el.parentNode.clientHeight, 10)
-
-        if (this.w > this.parentW) this.width = this.parentW
-        if (this.h > this.parentH) this.height = this.parentH
-        if ((this.x + this.width) > this.parentW) this.left = parentW - this.width
-        if ((this.y + this.height) > this.parentH) this.top = parentH - this.height
-      }
-      // 判断浏览器是否支持passive
-      try {
-        Object.defineProperty({}, "passive", {
-          get: function() {
-            this.passiveSupported = true;
-          }
-        });
-      } catch(err) {}
-      this.$emit('resizing', this.left, this.top, this.width, this.height)
-    },
     data () {
       return {
         top: this.y,
@@ -154,6 +110,30 @@
         elmW: 0,
         elmH: 0
       }
+    },
+    mounted () {
+      // 初始化控件宽高
+      if (this.minw > this.w) this.width = this.minw
+      if (this.minh > this.h) this.height = this.minh
+      // 判断是否只能在父级元素中拖动
+      if (this.parent) {
+        this.parentW = parseInt(this.$el.parentNode.clientWidth, 10)
+        this.parentH = parseInt(this.$el.parentNode.clientHeight, 10)
+
+        if (this.w > this.parentW) this.width = this.parentW
+        if (this.h > this.parentH) this.height = this.parentH
+        if ((this.x + this.width) > this.parentW) this.left = parentW - this.width
+        if ((this.y + this.height) > this.parentH) this.top = parentH - this.height
+      }
+      // 判断浏览器是否支持passive
+      try {
+        Object.defineProperty({}, "passive", {
+          get: function() {
+            this.passiveSupported = true;
+          }
+        });
+      } catch(err) {}
+      this.$emit('resizing', this.left, this.top, this.width, this.height)
     },
     methods: {
       elmDown (e) { // 组件被按下事件
@@ -245,7 +225,9 @@
           this.$emit('resizing', this.left, this.top, this.width, this.height)
         } else if (this.dragging) {
           if (this.parent) {
-            if (this.elmX + dX < this.parentX) this.mouseOffX = (dX - (diffX = this.parentX - this.elmX))
+            if (this.elmX + dX < this.parentX) {
+              this.mouseOffX = (dX - (diffX = this.parentX - this.elmX))
+            }
             else if (this.elmX + this.elmW + dX > this.parentW) this.mouseOffX = (dX - (diffX = this.parentW - this.elmX - this.elmW))
             if (this.elmY + dY < this.parentY) this.mouseOffY = (dY - (diffY = this.parentY - this.elmY))
             else if (this.elmY + this.elmH + dY > this.parentH) this.mouseOffY = (dY - (diffY = this.parentH - this.elmY - this.elmH))
@@ -289,16 +271,32 @@
     },
     watch: {
       x (newVal) {
-        this.left = newVal
+        if (isNaN(newVal)) {
+          console.error('传入x值为空!')
+        } else {
+          this.left = newVal
+        }
       },
       y (newVal) {
-        this.top = newVal
+        if (isNaN(newVal)) {
+          console.error('传入y值为空!')
+        } else {
+          this.top = newVal
+        }
       },
       w (newVal) {
-        this.width = newVal
+        if (isNaN(newVal)) {
+          console.error('传入w值为空!')
+        } else {
+          this.width = newVal
+        }
       },
       h (newVal) {
-        this.height = newVal
+        if (isNaN(newVal)) {
+          console.error('传入h值为空!')
+        } else {
+          this.height = newVal
+        }
       }
     },
     computed: {
