@@ -116,15 +116,7 @@
       if (this.minw > this.w) this.width = this.minw
       if (this.minh > this.h) this.height = this.minh
       // 判断是否只能在父级元素中拖动
-      if (this.parent) {
-        this.parentW = parseInt(this.$el.parentNode.clientWidth, 10)
-        this.parentH = parseInt(this.$el.parentNode.clientHeight, 10)
-
-        if (this.w > this.parentW) this.width = this.parentW
-        if (this.h > this.parentH) this.height = this.parentH
-        if ((this.x + this.width) > this.parentW) this.left = parentW - this.width
-        if ((this.y + this.height) > this.parentH) this.top = parentH - this.height
-      }
+      if (this.parent) this.calculationParent()
       // 判断浏览器是否支持passive
       try {
         Object.defineProperty({}, "passive", {
@@ -136,6 +128,14 @@
       this.$emit('resizing', this.left, this.top, this.width, this.height)
     },
     methods: {
+      calculationParent () {
+        this.parentW = parseInt(this.$el.parentNode.clientWidth, 10)
+        this.parentH = parseInt(this.$el.parentNode.clientHeight, 10)
+        if (this.w > this.parentW) this.width = this.parentW
+        if (this.h > this.parentH) this.height = this.parentH
+        if ((this.x + this.width) > this.parentW) this.left = parentW - this.width
+        if ((this.y + this.height) > this.parentH) this.top = parentH - this.height
+      },
       elmDown (e) { // 组件被按下事件
         // 阻止默认事件
         e.preventDefault()
@@ -185,6 +185,7 @@
         this.resizing = true
       },
       handleMove (e) {
+        // 鼠标在页面上的坐标
         this.mouseX = e.pageX || e.clientX + document.documentElement.scrollLeft
         this.mouseY = e.pageY || e.clientY + document.documentElement.scrollTop
         // diffX =  当前鼠标位置 - 上次鼠标位置 + ？？
@@ -193,29 +194,27 @@
         this.mouseOffX = this.mouseOffY = 0
         this.lastMouseX = this.mouseX
         this.lastMouseY = this.mouseY
-        let dX = diffX
-        let dY = diffY
         if (this.resizing) {
           if (this.handle.indexOf('t') >= 0) {
-            if (this.elmH - dY < this.minh) this.mouseOffY = (dY - (diffY = this.elmH - this.minh))
-            else if (this.elmY + dY < this.parentY) this.mouseOffY = (dY - (diffY = this.parentY - this.elmY))
+            if (this.elmH - diffY < this.minh) this.mouseOffY = (diffY - (diffY = this.elmH - this.minh))
+            else if (this.elmY + diffY < this.parentY) this.mouseOffY = (diffY - (diffY = this.parentY - this.elmY))
             this.elmY += diffY
             this.elmH -= diffY
           }
           if (this.handle.indexOf('b') >= 0) {
-            if (this.elmH + dY < this.minh) this.mouseOffY = (dY - (diffY = this.minh - this.elmH))
-            else if (this.elmY + this.elmH + dY > this.parentH) this.mouseOffY = (dY - (diffY = this.parentH - this.elmY - this.elmH))
+            if (this.elmH + diffY < this.minh) this.mouseOffY = (diffY - (diffY = this.minh - this.elmH))
+            else if (this.elmY + this.elmH + diffY > this.parentH) this.mouseOffY = (diffY - (diffY = this.parentH - this.elmY - this.elmH))
             this.elmH += diffY
           }
           if (this.handle.indexOf('l') >= 0) {
-            if (this.elmW - dX < this.minw) this.mouseOffX = (dX - (diffX = this.elmW - this.minw))
-            else if (this.elmX + dX < this.parentX) this.mouseOffX = (dX - (diffX = this.parentX - this.elmX))
+            if (this.elmW - diffX < this.minw) this.mouseOffX = (diffX - (diffX = this.elmW - this.minw))
+            else if (this.elmX + diffX < this.parentX) this.mouseOffX = (diffX - (diffX = this.parentX - this.elmX))
             this.elmX += diffX
             this.elmW -= diffX
           }
           if (this.handle.indexOf('r') >= 0) {
-            if (this.elmW + dX < this.minw) this.mouseOffX = (dX - (diffX = this.minw - this.elmW))
-            else if (this.elmX + this.elmW + dX > this.parentW) this.mouseOffX = (dX - (diffX = this.parentW - this.elmX - this.elmW))
+            if (this.elmW + diffX < this.minw) this.mouseOffX = (diffX - (diffX = this.minw - this.elmW))
+            else if (this.elmX + this.elmW + diffX > this.parentW) this.mouseOffX = (diffX - (diffX = this.parentW - this.elmX - this.elmW))
             this.elmW += diffX
           }
           this.left = (Math.round(this.elmX / this.grid[0]) * this.grid[0])
@@ -225,12 +224,17 @@
           this.$emit('resizing', this.left, this.top, this.width, this.height)
         } else if (this.dragging) {
           if (this.parent) {
-            if (this.elmX + dX < this.parentX) {
-              this.mouseOffX = (dX - (diffX = this.parentX - this.elmX))
+            if (this.elmX + diffX < this.parentX) {
+              diffX = 0
+            } else if (this.elmX + this.elmW + diffX > this.parentW) {
+              diffX = 0
             }
-            else if (this.elmX + this.elmW + dX > this.parentW) this.mouseOffX = (dX - (diffX = this.parentW - this.elmX - this.elmW))
-            if (this.elmY + dY < this.parentY) this.mouseOffY = (dY - (diffY = this.parentY - this.elmY))
-            else if (this.elmY + this.elmH + dY > this.parentH) this.mouseOffY = (dY - (diffY = this.parentH - this.elmY - this.elmH))
+            if (this.elmY + diffY < this.parentY) {
+              diffY = 0
+            }
+            else if (this.elmY + this.elmH + diffY > this.parentH) {
+              diffY = 0
+            }
           }
           this.elmX += diffX
           this.elmY += diffY
