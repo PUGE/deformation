@@ -166,7 +166,6 @@
         this.mouseY = e.pageY || e.clientY + document.documentElement.scrollTop
         this.lastMouseX = this.mouseX
         this.lastMouseY = this.mouseY
-        
         const target = e.target || e.srcElement
         const regex = new RegExp('handle-([trmbl]{2})', '')
         if (!this.$el.contains(target) && !regex.test(target.className)) {
@@ -224,17 +223,10 @@
           this.$emit('resizing', this.left, this.top, this.width, this.height)
         } else if (this.dragging) {
           if (this.parent) {
-            if (this.elmX + diffX < this.parentX) {
-              diffX = 0
-            } else if (this.elmX + this.elmW + diffX > this.parentW) {
-              diffX = 0
-            }
-            if (this.elmY + diffY < this.parentY) {
-              diffY = 0
-            }
-            else if (this.elmY + this.elmH + diffY > this.parentH) {
-              diffY = 0
-            }
+            if (this.elmX + diffX < this.parentX) this.mouseOffX = (diffX * this.zoom - (diffX = this.parentX - this.elmX))
+            else if (this.elmX + this.elmW + diffX > this.parentW) this.mouseOffX = (diffX * this.zoom - (diffX = this.parentW - this.elmX - this.elmW))
+            if (this.elmY + diffY < this.parentY) this.mouseOffY = (diffY * this.zoom - (diffY = this.parentY - this.elmY))
+            else if (this.elmY + this.elmH + diffY > this.parentH) this.mouseOffY = (diffY * this.zoom - (diffY = this.parentH - this.elmY - this.elmH))
           }
           this.elmX += diffX
           this.elmY += diffY
