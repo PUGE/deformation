@@ -1,6 +1,6 @@
 {
   "name": "deformation",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "自由拖动组件",
   "author": "PUGE <my@owo.help>",
   "main": "./index.js",

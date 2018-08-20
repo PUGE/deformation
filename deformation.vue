@@ -133,8 +133,8 @@
         this.parentH = parseInt(this.$el.parentNode.clientHeight, 10)
         if (this.w > this.parentW) this.width = this.parentW
         if (this.h > this.parentH) this.height = this.parentH
-        if ((this.x + this.width) > this.parentW) this.left = parentW - this.width
-        if ((this.y + this.height) > this.parentH) this.top = parentH - this.height
+        if ((this.x + this.width) > this.parentW) this.left = this.parentW - this.width
+        if ((this.y + this.height) > this.parentH) this.top = this.parentH - this.height
       },
       elmDown (e) { // 组件被按下事件
         // 阻止默认事件
