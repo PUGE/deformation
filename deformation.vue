@@ -255,7 +255,7 @@
         }
         if (this.resizing) {
           this.resizing = false
-          this.$emit('resizestop', this.left, this.top, this.width, this.height)
+          this.$emit('resizestop', [this.left, this.top, this.width, this.height])
         }
         if (this.dragging) {
           this.dragging = false
