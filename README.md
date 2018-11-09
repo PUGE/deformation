@@ -3,6 +3,8 @@
 
 > 自由拖动缩放组件.
 
+![展示](http://github-puge.oss-cn-beijing.aliyuncs.com/deformation/1.png)
+
 ### 特点
 
 * 没有依赖包
