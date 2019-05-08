@@ -1,5 +1,5 @@
 <template>
-  <div class="vdr" id="vdr" :class="{ draggable: draggable && !disable, resizable: resizable && !disable, active , dragging, resizing}" @mousedown.stop="elmDown" tabindex="0" :style="style">
+  <div class="vdr" id="vdr" :class="{ draggable: draggable && !disable, resizable: resizable && !disable, active , dragging, resizing}"  tabindex="0" :style="style">
     <!-- 如果可改变大小为真 -->
     <template v-if="resizable && !disable">
       <!-- 待优化 -->
@@ -7,15 +7,19 @@
       <div class="handle handle-mr" v-if="resizable === true || resizable === 1 || resizable === 2" @mousedown.left.stop.prevent="handleDown('mr')"></div>
       <div class="handle handle-tm" v-if="resizable === true || resizable === 1 || resizable === 3" @mousedown.left.stop.prevent="handleDown('tm')"></div>
       <div class="handle handle-bm" v-if="resizable === true || resizable === 1 || resizable === 3" @mousedown.left.stop.prevent="handleDown('bm')"></div>
-      <div class="handle handle-br" v-if="resizable === true || resizable === 1" @mousedown.left.stop.prevent="handleDown('br')">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 17"><defs></defs><g id="图层_2" data-name="图层 2"><g id="图层_2-2" data-name="图层 2"><rect class="cls-1" x="2.63" y="-0.2" width="1" height="6.65" transform="translate(-1.3 3.13) rotate(-45)"/><path class="cls-1" d="M.5,5.78a.5.5,0,0,1-.5-.5V0H5.28a.5.5,0,0,1,.5.5.5.5,0,0,1-.5.5H1V5.28A.5.5,0,0,1,.5,5.78Z"/><path class="cls-1" d="M16.3,5.78a.5.5,0,0,1-.5-.5V1H11.52a.5.5,0,0,1,0-1H16.8V5.28A.5.5,0,0,1,16.3,5.78Z"/><path class="cls-1" d="M5.28,16.8H0V11.52a.5.5,0,0,1,1,0V15.8H5.28a.5.5,0,0,1,.5.5A.5.5,0,0,1,5.28,16.8Z"/><path class="cls-1" d="M16.22,16.72a.52.52,0,0,1-.35-.14l-4.7-4.7a.5.5,0,0,1,.71-.71l4.7,4.7a.51.51,0,0,1,0,.71A.54.54,0,0,1,16.22,16.72Z"/><path class="cls-1" d="M17,17H11.72a.5.5,0,1,1,0-1H16V11.72a.5.5,0,1,1,1,0Z"/></g></g></svg>
-      </div>
+      <template v-if="shouIcon === true">
+        <div class="handle handle-br" v-if="resizable === true || resizable === 1" @mousedown.left.stop.prevent="handleDown('br')">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 17"><defs></defs><g id="图层_2" data-name="图层 2"><g id="图层_2-2" data-name="图层 2"><rect class="cls-1" x="2.63" y="-0.2" width="1" height="6.65" transform="translate(-1.3 3.13) rotate(-45)"/><path class="cls-1" d="M.5,5.78a.5.5,0,0,1-.5-.5V0H5.28a.5.5,0,0,1,.5.5.5.5,0,0,1-.5.5H1V5.28A.5.5,0,0,1,.5,5.78Z"/><path class="cls-1" d="M16.3,5.78a.5.5,0,0,1-.5-.5V1H11.52a.5.5,0,0,1,0-1H16.8V5.28A.5.5,0,0,1,16.3,5.78Z"/><path class="cls-1" d="M5.28,16.8H0V11.52a.5.5,0,0,1,1,0V15.8H5.28a.5.5,0,0,1,.5.5A.5.5,0,0,1,5.28,16.8Z"/><path class="cls-1" d="M16.22,16.72a.52.52,0,0,1-.35-.14l-4.7-4.7a.5.5,0,0,1,.71-.71l4.7,4.7a.51.51,0,0,1,0,.71A.54.54,0,0,1,16.22,16.72Z"/><path class="cls-1" d="M17,17H11.72a.5.5,0,1,1,0-1H16V11.72a.5.5,0,1,1,1,0Z"/></g></g></svg>
+        </div>
+      </template>
     </template>
     <slot></slot>
   </div>
 </template>
 
 <script>
+import { type } from "os";
+
   export default {
     replace: true,
     name: 'deformation',
@@ -83,6 +87,16 @@
       },
       disable: {
         type: Boolean, default: false
+      },
+      // 显示右下角拖动图标
+      shouIcon: {
+        type: Boolean,
+        default: true
+      },
+      // 允许拖动的元素ID
+      dragElement: {
+        type: String,
+        default: ''
       }
     },
     data () {
@@ -112,6 +126,15 @@
       }
     },
     mounted () {
+      // 注册拖动事件
+      console.log(this.dragElement)
+      if (this.dragElement === '') {
+        this.$el.onmousedown = this.elmDown
+      } else {
+        const dragDom = this.$el.getElementsByClassName(this.dragElement)[0]
+        dragDom.onmousedown = this.elmDown
+      }
+      
       // 初始化控件宽高
       if (this.minw > this.w) this.width = this.minw
       if (this.minh > this.h) this.height = this.minh
